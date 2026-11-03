@@ -15,89 +15,96 @@ export function Projects() {
   const activeProject = PROJECTS.find((p) => p.id === selectedId) || PROJECTS[0]
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
-
+    <section id="projects" className="py-28 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/[0.08] pb-8 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#08482D]/15 pb-8 mb-16">
           <div>
-            <span className="font-mono text-xs font-semibold text-cyan-400 tracking-wider uppercase flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-              SECTION 02 // REAL REPOSITORY CASE FILES
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mt-2">
-              FEATURED SYSTEMS
+            <div className="flex items-center gap-3 mb-2">
+              <span className="badge-mint font-mono text-xs font-bold">SECTION 02 // CASE FILES</span>
+              <span className="font-handwriting text-2xl text-[#08482D] font-bold rotate-[-1deg]">
+                verified GitHub repositories
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0d120e] font-display tracking-tight">
+              FEATURED SYSTEMS.
             </h2>
           </div>
-          <p className="font-mono text-xs text-slate-400 mt-3 md:mt-0 max-w-sm">
-            Auditable architectures, verified technical decisions, failure handling, and production live demos.
+          <p className="text-sm text-[#414447] font-mono mt-3 md:mt-0 max-w-sm font-semibold">
+            Auditable architectures, verified technical decisions, failure models, and real repository evidence.
           </p>
         </div>
 
-        {/* Project Selector Rail */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
+        {/* Project Selector Rail in Reelmark Style */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
           {PROJECTS.map((p) => {
             const isSelected = p.id === selectedId
             return (
               <button
                 key={p.id}
                 onClick={() => setSelectedId(p.id)}
-                className={`p-4 rounded-xl text-left border transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                className={`p-5 rounded-2xl text-left border-2 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-gradient-to-br from-indigo-950/80 via-slate-900 to-slate-950 border-cyan-500/60 shadow-lg shadow-cyan-500/20 text-white transform -translate-y-1'
-                    : 'glass-panel text-slate-400 hover:text-white hover:border-white/20'
+                    ? 'bg-[#08482D] text-[#F5F8EF] border-[#08482D] shadow-lg transform -translate-y-1'
+                    : 'reelmark-card text-[#414447] hover:text-[#0d120e] hover:border-[#08482D]/30'
                 }`}
               >
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-[10px] font-mono text-slate-500">CASE {p.index}</span>
-                  {p.accent === 'lime' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400/50" />}
+                <div className="flex justify-between items-center mb-2.5">
+                  <span className={`text-xs font-mono font-bold ${isSelected ? 'text-[#DAE7C7]' : 'text-[#414447]'}`}>
+                    CASE {p.index}
+                  </span>
+                  {isSelected && <span className="w-2 h-2 rounded-full bg-[#DAE7C7]" />}
                 </div>
-                <div className="font-bold text-xs font-mono tracking-wide text-white truncate">{p.name}</div>
-                <div className="text-[10px] font-mono text-slate-400 truncate mt-1">{p.category}</div>
+                <div className={`font-black text-sm font-display tracking-wide truncate ${isSelected ? 'text-white' : 'text-[#0d120e]'}`}>
+                  {p.name}
+                </div>
+                <div className={`text-xs font-mono font-semibold truncate mt-1.5 ${isSelected ? 'text-[#DAE7C7]/90' : 'text-[#414447]'}`}>
+                  {p.category}
+                </div>
               </button>
             )
           })}
         </div>
 
         {/* Selected Project Full Dossier Card */}
-        <div className="p-8 lg:p-10 rounded-3xl glass-panel border-white/[0.1] shadow-2xl shadow-indigo-950/30">
+        <div className="p-8 sm:p-12 rounded-3xl bg-white border-2 border-[#08482D]/15 shadow-xl shadow-[#08482D]/6">
+          
           {/* Top Header */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-8 border-b border-white/[0.08] gap-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-8 border-b border-[#08482D]/15 gap-5">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-2">
-                <span className="text-cyan-400 font-semibold">CASE FILE #{activeProject.index}</span>
+              <div className="flex items-center gap-2.5 text-xs font-mono text-[#414447] mb-2.5 font-bold">
+                <span className="text-[#08482D]">CASE FILE #{activeProject.index}</span>
                 <span>•</span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+                <span className="badge-mint py-1 px-3 text-xs font-black">
                   {activeProject.status}
                 </span>
                 <span>•</span>
                 <span>{activeProject.year}</span>
               </div>
-              <h3 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              <h3 className="text-3xl sm:text-5xl font-black text-[#0d120e] font-display tracking-tight">
                 {activeProject.name}
-                <span className="ml-3 text-base sm:text-xl font-normal text-slate-400 font-sans">
+                <span className="ml-3 text-xl sm:text-2xl font-normal text-[#414447] font-sans">
                   // {activeProject.alias}
                 </span>
               </h3>
-              <p className="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">
+              <p className="text-base sm:text-lg text-[#414447] mt-3 max-w-3xl leading-relaxed font-sans font-medium">
                 {activeProject.tagline}
               </p>
             </div>
 
             {/* Links and repo buttons */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3.5">
               {activeProject.repo && (
                 <a
                   href={activeProject.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/[0.1] hover:border-cyan-500/50 text-white font-mono text-xs transition-all shadow-sm"
+                  className="btn-forest text-sm py-3 px-6 shadow-md"
                 >
-                  <GithubIcon className="w-4 h-4 text-cyan-400" />
-                  <span>VIEW REPOSITORY</span>
-                  <ExternalLink className="w-3 h-3 text-slate-400" />
+                  <GithubIcon className="w-5 h-5 text-[#DAE7C7]" />
+                  <span>VIEW REPO</span>
+                  <ExternalLink className="w-4 h-4" />
                 </a>
               )}
 
@@ -106,25 +113,22 @@ export function Projects() {
                   href={activeProject.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative inline-flex items-center justify-center p-[1px] overflow-hidden rounded-xl font-medium group transition-all shadow-md shadow-indigo-500/30"
+                  className="btn-mint text-sm py-3 px-6 shadow-sm"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-indigo-500"></span>
-                  <span className="relative flex items-center gap-2 px-5 py-2.5 transition-all ease-out bg-slate-950 rounded-[11px] group-hover:bg-opacity-0 text-xs font-bold text-white tracking-wide">
-                    <span>LIVE DEMO</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </span>
+                  <span>LIVE DEMO</span>
+                  <ExternalLink className="w-4 h-4" />
                 </a>
               )}
             </div>
           </div>
 
           {/* Technology Badges */}
-          <div className="py-5 border-b border-white/[0.08] flex flex-wrap gap-2 text-xs font-mono">
-            <span className="text-slate-500 py-1 mr-2 text-[11px] uppercase tracking-wider">STACK:</span>
+          <div className="py-6 border-b border-[#08482D]/15 flex flex-wrap gap-2.5 text-xs font-mono">
+            <span className="text-[#414447] py-1.5 mr-2 text-xs uppercase tracking-wider font-extrabold">STACK:</span>
             {activeProject.stack.map((item) => (
               <span
                 key={item}
-                className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300"
+                className="px-3.5 py-1.5 rounded-full bg-[#EBF2DF] border border-[#BED4A0] text-[#08482D] font-bold text-xs"
               >
                 {item}
               </span>
@@ -132,34 +136,35 @@ export function Projects() {
           </div>
 
           {/* Dossier Body Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-8">
             {/* Left 7 cols: Problem, Architecture, Decisions */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-7">
+              
               {/* Problem statement */}
               <div>
-                <h4 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
+                <h4 className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider mb-2.5">
                   // THE ENGINEERING CHALLENGE
                 </h4>
-                <p className="text-sm text-slate-200 leading-relaxed bg-slate-900/60 p-5 rounded-xl border border-white/[0.06] border-l-4 border-l-cyan-500 font-sans">
+                <p className="text-base text-[#0d120e] leading-relaxed bg-[#F5F8EF] p-6 rounded-2xl border-2 border-[#08482D]/15 border-l-4 border-l-[#08482D] font-sans font-medium">
                   {activeProject.problem}
                 </p>
               </div>
 
               {/* Architecture Blueprint */}
               <div>
-                <h4 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-wider mb-3">
+                <h4 className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider mb-3">
                   // SYSTEM TOPOLOGY &amp; ARCHITECTURE
                 </h4>
-                <div className="space-y-2.5 font-mono text-xs">
+                <div className="space-y-3 font-mono text-xs">
                   {activeProject.architecture.map((layer, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-slate-900/40 border border-white/[0.06] flex flex-col sm:flex-row sm:items-start gap-3"
+                      className="p-4 rounded-2xl bg-[#F5F8EF] border border-[#08482D]/15 flex flex-col sm:flex-row sm:items-start gap-3.5"
                     >
-                      <span className="text-cyan-400 font-bold w-24 shrink-0">
+                      <span className="text-[#08482D] font-black w-28 shrink-0 text-sm">
                         [{layer.label}]
                       </span>
-                      <span className="text-slate-300">{layer.detail}</span>
+                      <span className="text-[#414447] font-semibold text-xs leading-relaxed">{layer.detail}</span>
                     </div>
                   ))}
                 </div>
@@ -167,13 +172,13 @@ export function Projects() {
 
               {/* Verified Key Architectural Decisions */}
               <div>
-                <h4 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-wider mb-3">
+                <h4 className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider mb-3">
                   // VERIFIED ARCHITECTURAL DECISIONS
                 </h4>
-                <ul className="space-y-2.5 text-xs text-slate-300 font-sans">
+                <ul className="space-y-3 text-sm text-[#414447] font-sans font-medium">
                   {activeProject.decisions.map((dec, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5">
-                      <span className="text-cyan-400 font-mono text-sm leading-none mt-0.5">›</span>
+                    <li key={idx} className="flex items-start gap-3">
+                      <span className="text-[#08482D] font-mono text-base font-bold leading-none mt-0.5">›</span>
                       <span>{dec}</span>
                     </li>
                   ))}
@@ -182,43 +187,44 @@ export function Projects() {
             </div>
 
             {/* Right 5 cols: Visual Screenshot + Verified Checklist */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 space-y-7">
+              
               {/* Screenshot or Visual Card */}
               {activeProject.screenshot ? (
-                <div className="relative rounded-2xl border border-white/[0.1] bg-slate-950 p-2 overflow-hidden shadow-xl group">
-                  <div className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded-full bg-slate-900/90 border border-white/[0.1] font-mono text-[9px] text-cyan-300 backdrop-blur-md">
+                <div className="relative rounded-3xl border-2 border-[#08482D]/15 bg-[#F5F8EF] p-3 overflow-hidden shadow-md group">
+                  <div className="absolute top-5 left-5 z-10 px-3.5 py-1.5 rounded-full bg-[#08482D] text-[#F5F8EF] font-mono text-xs font-bold shadow-md">
                     LIVE REPOSITORY SCREENSHOT
                   </div>
                   <img
                     src={activeProject.screenshot}
                     alt={activeProject.name}
-                    className="w-full h-auto rounded-xl object-cover border border-white/[0.05] opacity-90 group-hover:opacity-100 transition-opacity"
+                    className="w-full h-auto rounded-2xl object-cover border border-[#08482D]/10 opacity-95 group-hover:opacity-100 transition-opacity"
                   />
                 </div>
               ) : (
-                <div className="p-8 rounded-2xl border border-dashed border-white/[0.1] bg-slate-900/30 flex flex-col items-center justify-center text-center">
-                  <Shield className="w-8 h-8 text-slate-500 mb-2" />
-                  <span className="font-mono text-xs text-slate-400 uppercase">
+                <div className="p-10 rounded-3xl border-2 border-dashed border-[#08482D]/25 bg-[#F5F8EF] flex flex-col items-center justify-center text-center">
+                  <Shield className="w-10 h-10 text-[#08482D]/60 mb-3" />
+                  <span className="font-mono text-sm text-[#08482D] uppercase font-black">
                     SEALED ARCHITECTURE / SOURCE PRIVATE
                   </span>
-                  <p className="text-[11px] text-slate-500 mt-1 max-w-xs font-sans">
+                  <p className="text-xs text-[#414447] mt-1.5 max-w-xs font-sans font-semibold">
                     Protected internal research repository or private codebase.
                   </p>
                 </div>
               )}
 
               {/* Verified Capabilities Checklist */}
-              <div className="p-6 rounded-2xl bg-slate-900/50 border border-white/[0.08]">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+              <div className="p-7 rounded-3xl reelmark-card-mint shadow-xs border-2 border-[#BED4A0]">
+                <div className="flex items-center gap-3 mb-4">
+                  <CheckCircle2 className="w-5 h-5 text-[#08482D]" />
+                  <span className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider">
                     VERIFIED ARTIFACT DELIVERABLES
                   </span>
                 </div>
-                <div className="space-y-2.5 font-sans">
+                <div className="space-y-3 font-sans">
                   {activeProject.verified.map((v, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                      <span className="text-cyan-400 font-mono text-[10px] mt-0.5">•</span>
+                    <div key={idx} className="flex items-start gap-3 text-xs text-[#0d120e] font-semibold">
+                      <span className="text-[#08482D] font-mono text-sm leading-none">•</span>
                       <span>{v}</span>
                     </div>
                   ))}
@@ -227,8 +233,8 @@ export function Projects() {
 
               {/* Caveat or Engineering Note */}
               {activeProject.caveat && (
-                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-start gap-2.5 font-sans">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <div className="p-5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-xs text-amber-950 flex items-start gap-3 font-sans font-semibold">
+                  <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
                   <span>{activeProject.caveat}</span>
                 </div>
               )}

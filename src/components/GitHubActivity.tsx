@@ -25,112 +25,112 @@ export function GitHubActivity() {
   }, [contributions])
 
   return (
-    <section id="github" className="py-24 relative overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 right-1/4 w-[450px] h-[450px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none" />
-
+    <section id="github" className="py-28 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/[0.08] pb-8 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#08482D]/15 pb-8 mb-16">
           <div>
-            <span className="font-mono text-xs font-semibold text-cyan-400 tracking-wider uppercase flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-              SECTION 04 // OPEN SOURCE TELEMETRY
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mt-2">
-              ENGINEERING FOOTPRINT
+            <div className="flex items-center gap-3 mb-2">
+              <span className="badge-mint font-mono text-xs font-bold">SECTION 04 // OPEN SOURCE</span>
+              <span className="font-handwriting text-2xl text-[#08482D] font-bold rotate-[-1deg]">
+                activity footprint
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0d120e] font-display tracking-tight">
+              GITHUB FOOTPRINT.
             </h2>
           </div>
           <a
             href={user.htmlUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 mt-4 md:mt-0 font-mono text-xs text-slate-400 hover:text-cyan-400 transition-colors"
+            className="flex items-center gap-2 mt-4 md:mt-0 font-mono text-sm text-[#08482D] font-extrabold hover:underline"
           >
             <span>GITHUB @{user.login}</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <ExternalLink className="w-4 h-4" />
           </a>
         </div>
 
         {/* GitHub Stats Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="p-6 rounded-2xl glass-panel glass-panel-hover">
-            <span className="font-mono text-[11px] text-slate-400 block">PUBLIC REPOS</span>
-            <span className="text-3xl font-mono font-bold text-white mt-1 block">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-10">
+          <div className="p-7 rounded-3xl reelmark-card">
+            <span className="font-mono text-xs text-[#414447] block font-bold">PUBLIC REPOS</span>
+            <span className="text-4xl sm:text-5xl font-display font-black text-[#0d120e] mt-1.5 block">
               {user.publicRepos}
             </span>
-            <span className="text-[11px] font-mono text-cyan-400">Active Codebases</span>
+            <span className="text-xs font-mono text-[#08482D] font-extrabold mt-1 block">Active Codebases</span>
           </div>
 
-          <div className="p-6 rounded-2xl glass-panel glass-panel-hover">
-            <span className="font-mono text-[11px] text-slate-400 block">TOTAL COMMITS</span>
-            <span className="text-3xl font-mono font-bold text-gradient-emerald mt-1 block">
+          <div className="p-7 rounded-3xl reelmark-card">
+            <span className="font-mono text-xs text-[#414447] block font-bold">TOTAL COMMITS</span>
+            <span className="text-4xl sm:text-5xl font-display font-black text-[#08482D] mt-1.5 block">
               {contributions.total}
             </span>
-            <span className="text-[11px] font-mono text-slate-400">In Last 12 Months</span>
+            <span className="text-xs font-mono text-[#414447] font-semibold mt-1 block">In Last 12 Months</span>
           </div>
 
-          <div className="p-6 rounded-2xl glass-panel glass-panel-hover">
-            <span className="font-mono text-[11px] text-slate-400 block">LONGEST STREAK</span>
-            <span className="text-3xl font-mono font-bold text-white mt-1 block">
-              {contributions.longestStreak} <span className="text-xs font-normal text-slate-400">DAYS</span>
+          <div className="p-7 rounded-3xl reelmark-card">
+            <span className="font-mono text-xs text-[#414447] block font-bold">LONGEST STREAK</span>
+            <span className="text-4xl sm:text-5xl font-display font-black text-[#0d120e] mt-1.5 block">
+              {contributions.longestStreak} <span className="text-sm font-bold text-[#414447]">DAYS</span>
             </span>
-            <span className="text-[11px] font-mono text-indigo-400">{contributions.activeDays} Active Days</span>
+            <span className="text-xs font-mono text-[#08482D] font-extrabold mt-1 block">{contributions.activeDays} Active Days</span>
           </div>
 
-          <div className="p-6 rounded-2xl glass-panel glass-panel-hover">
-            <span className="font-mono text-[11px] text-slate-400 block">FOLLOWERS</span>
-            <span className="text-3xl font-mono font-bold text-white mt-1 block">
+          <div className="p-7 rounded-3xl reelmark-card">
+            <span className="font-mono text-xs text-[#414447] block font-bold">FOLLOWERS</span>
+            <span className="text-4xl sm:text-5xl font-display font-black text-[#0d120e] mt-1.5 block">
               {user.followers}
             </span>
-            <span className="text-[11px] font-mono text-slate-400">Following {user.following}</span>
+            <span className="text-xs font-mono text-[#414447] font-semibold mt-1 block">Following {user.following}</span>
           </div>
         </div>
 
         {/* Contribution Heatmap Container */}
-        <div className="p-8 rounded-3xl glass-panel mb-12">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/[0.08] gap-2 mb-6">
-            <div className="flex items-center gap-2.5">
-              <Calendar className="w-4 h-4 text-cyan-400" />
-              <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+        <div className="p-8 sm:p-10 rounded-3xl bg-white border-2 border-[#08482D]/15 shadow-sm mb-14">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[#08482D]/15 gap-3 mb-6">
+            <div className="flex items-center gap-3">
+              <Calendar className="w-5 h-5 text-[#08482D]" />
+              <span className="font-mono text-sm font-extrabold text-[#0d120e] uppercase tracking-wider">
                 COMMIT FREQUENCY MATRIX // 2025–2026
               </span>
             </div>
-            <div className="flex items-center gap-2 font-mono text-[10px] text-slate-400">
+            <div className="flex items-center gap-2.5 font-mono text-xs text-[#414447] font-bold">
               <span>LESS</span>
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-slate-800 border border-white/[0.05]" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-indigo-950" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-indigo-700" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-cyan-600" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-cyan-400" />
+              <span className="w-3.5 h-3.5 rounded-[4px] bg-[#EBF2DF] border border-[#C8DBAE]" />
+              <span className="w-3.5 h-3.5 rounded-[4px] bg-[#DAE7C7]" />
+              <span className="w-3.5 h-3.5 rounded-[4px] bg-[#9fc485]" />
+              <span className="w-3.5 h-3.5 rounded-[4px] bg-[#428254]" />
+              <span className="w-3.5 h-3.5 rounded-[4px] bg-[#08482D]" />
               <span>MORE</span>
             </div>
           </div>
 
           {/* Grid of contribution squares */}
-          <div className="overflow-x-auto pb-3">
-            <div className="grid grid-flow-col grid-rows-7 gap-1.5 min-w-[700px]">
+          <div className="overflow-x-auto pb-4">
+            <div className="grid grid-flow-col grid-rows-7 gap-2 min-w-[700px]">
               {heatmapDays.map((d, i) => {
                 const colors = [
-                  'bg-slate-900 border border-white/[0.06]',
-                  'bg-indigo-950',
-                  'bg-indigo-700',
-                  'bg-cyan-600',
-                  'bg-cyan-400 shadow-sm shadow-cyan-400/40',
+                  'bg-[#EBF2DF] border border-[#C8DBAE]/70',
+                  'bg-[#DAE7C7]',
+                  'bg-[#9fc485]',
+                  'bg-[#428254]',
+                  'bg-[#08482D]',
                 ]
                 const colorClass = colors[Math.min(d.level, 4)]
                 return (
                   <div
                     key={i}
                     title={`${d.date}: ${d.count} contributions`}
-                    className={`w-3.5 h-3.5 rounded-[3px] ${colorClass} transition-transform hover:scale-125 hover:z-10`}
+                    className={`w-4 h-4 rounded-[4px] ${colorClass} transition-transform hover:scale-130 hover:z-10`}
                   />
                 )
               })}
             </div>
           </div>
 
-          <div className="pt-4 border-t border-white/[0.08] flex justify-between font-mono text-[10px] text-slate-500">
+          <div className="pt-5 border-t border-[#08482D]/15 flex justify-between font-mono text-xs text-[#414447] font-bold">
             <span>140 CONSECUTIVE ACTIVE DAYS MONITORED</span>
             <span>DATA SOURCE: GITHUB EVENT PIPELINE</span>
           </div>
@@ -138,22 +138,22 @@ export function GitHubActivity() {
 
         {/* Public Repositories List with Language Filters */}
         <div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/[0.08] mb-8 gap-4">
-            <h3 className="font-mono text-sm font-bold text-white uppercase flex items-center gap-2.5">
-              <FolderGit2 className="w-4 h-4 text-cyan-400" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[#08482D]/15 mb-8 gap-4">
+            <h3 className="font-display text-lg font-black text-[#0d120e] uppercase flex items-center gap-3">
+              <FolderGit2 className="w-5 h-5 text-[#08482D]" />
               INSPECTED PUBLIC REPOSITORIES
             </h3>
 
             {/* Language filter pills */}
-            <div className="flex flex-wrap gap-1.5 font-mono text-xs">
+            <div className="flex flex-wrap gap-2 font-mono text-xs">
               {availableLangs.map((lang) => (
                 <button
                   key={lang}
                   onClick={() => setFilterLang(lang)}
-                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                  className={`px-4 py-2 rounded-full border transition-all cursor-pointer font-bold ${
                     filterLang === lang
-                      ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white border-transparent shadow-md shadow-indigo-500/20'
-                      : 'bg-slate-900/60 text-slate-400 border-white/[0.08] hover:text-white'
+                      ? 'bg-[#08482D] text-[#F5F8EF] border-[#08482D] shadow-sm'
+                      : 'bg-white text-[#414447] border-[#08482D]/15 hover:text-[#0d120e]'
                   }`}
                 >
                   {lang}
@@ -163,46 +163,46 @@ export function GitHubActivity() {
           </div>
 
           {/* Repo cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {filteredRepos.map((repo) => (
               <a
                 key={repo.name}
                 href={repo.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-6 rounded-2xl glass-panel glass-panel-hover flex flex-col justify-between group"
+                className="p-7 rounded-3xl reelmark-card flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex items-start justify-between gap-2 mb-3">
-                    <h4 className="font-mono text-sm font-bold text-white group-hover:text-cyan-400 transition-colors flex items-center gap-2">
+                  <div className="flex items-start justify-between gap-3 mb-3.5">
+                    <h4 className="font-display text-base font-black text-[#0d120e] group-hover:text-[#08482D] transition-colors flex items-center gap-2.5">
                       <span>{repo.name}</span>
                       {repo.fork && (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.06] text-slate-400 border border-white/[0.08]">
+                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#EBF2DF] text-[#08482D] border border-[#BED4A0] font-mono font-bold">
                           FORK
                         </span>
                       )}
                     </h4>
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 transition-colors shrink-0" />
+                    <ExternalLink className="w-4 h-4 text-[#414447] group-hover:text-[#08482D] transition-colors shrink-0" />
                   </div>
 
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4 font-sans">
+                  <p className="text-sm text-[#414447] line-clamp-2 leading-relaxed mb-5 font-sans font-medium">
                     {repo.description || 'Production codebase repository.'}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-white/[0.06] font-mono text-[11px]">
+                <div className="flex items-center justify-between pt-4 border-t border-[#08482D]/15 font-mono text-xs font-bold">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                    <span className="text-slate-300">{repo.language || 'Multi-stack'}</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#08482D]" />
+                    <span className="text-[#0d120e]">{repo.language || 'Multi-stack'}</span>
                   </div>
 
-                  <div className="flex items-center gap-3 text-slate-400">
-                    <span className="flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-4 text-[#414447]">
+                    <span className="flex items-center gap-1.5">
+                      <Star className="w-4 h-4" />
                       {repo.stars}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <GitFork className="w-3.5 h-3.5" />
+                    <span className="flex items-center gap-1.5">
+                      <GitFork className="w-4 h-4" />
                       {repo.forks}
                     </span>
                   </div>
@@ -213,14 +213,14 @@ export function GitHubActivity() {
         </div>
 
         {/* Aggregated Language Bar */}
-        <div className="mt-12 p-8 rounded-3xl glass-panel">
-          <span className="font-mono text-xs text-slate-400 uppercase tracking-wider block mb-4 font-semibold">
+        <div className="mt-14 p-8 sm:p-10 rounded-3xl bg-white border-2 border-[#08482D]/15">
+          <span className="font-mono text-xs text-[#414447] uppercase tracking-wider block mb-4 font-extrabold">
             CODEBASE LANGUAGE PROPORTION
           </span>
 
-          <div className="flex h-3 w-full bg-slate-900 rounded-full overflow-hidden mb-5">
+          <div className="flex h-4 w-full bg-[#EBF2DF] rounded-full overflow-hidden mb-6">
             {languages.map((l, idx) => {
-              const bgColors = ['bg-cyan-400', 'bg-indigo-500', 'bg-purple-500', 'bg-emerald-400', 'bg-amber-400']
+              const bgColors = ['bg-[#08482D]', 'bg-[#106b43]', 'bg-[#428254]', 'bg-[#7ba987]', 'bg-[#b6d1be]']
               return (
                 <div
                   key={l.name}
@@ -232,12 +232,12 @@ export function GitHubActivity() {
             })}
           </div>
 
-          <div className="flex flex-wrap gap-4 font-mono text-xs">
+          <div className="flex flex-wrap gap-5 font-mono text-sm">
             {languages.map((l) => (
               <div key={l.name} className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                <span className="text-white font-medium">{l.name}</span>
-                <span className="text-slate-400">{l.percent}%</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#08482D]" />
+                <span className="text-[#0d120e] font-bold">{l.name}</span>
+                <span className="text-[#414447] font-semibold">{l.percent}%</span>
               </div>
             ))}
           </div>

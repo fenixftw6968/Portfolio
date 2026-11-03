@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float } from '@react-three/drei'
 import * as THREE from 'three'
@@ -28,7 +28,7 @@ function generateStaticParticlePositions(count: number) {
   return pos
 }
 
-const STATIC_PARTICLE_POSITIONS = generateStaticParticlePositions(160)
+const STATIC_PARTICLE_POSITIONS = generateStaticParticlePositions(180)
 
 function PolyhedronSculpture({ scrollOffset, mousePos }: CoreMeshProps) {
   const outerGroup = useRef<THREE.Group>(null)
@@ -41,115 +41,124 @@ function PolyhedronSculpture({ scrollOffset, mousePos }: CoreMeshProps) {
 
   const positions = useMemo(() => STATIC_PARTICLE_POSITIONS, [])
 
-  useFrame((_, delta) => {
-    const targetX = mousePos.x * 0.5
-    const targetY = mousePos.y * 0.5
+  useFrame((state, delta) => {
+    // Heightened mouse sensitivity for an alive, movable sculpture
+    const targetX = mousePos.x * 0.9
+    const targetY = mousePos.y * 0.9
+
+    // Time-based organic floating motion
+    const t = state.clock.getElapsedTime()
 
     if (outerGroup.current) {
-      outerGroup.current.rotation.y += delta * 0.3
+      outerGroup.current.rotation.y += delta * 0.45
+      outerGroup.current.position.y = Math.sin(t * 1.5) * 0.15
+      outerGroup.current.position.x = THREE.MathUtils.lerp(
+        outerGroup.current.position.x,
+        mousePos.x * 0.4,
+        0.08
+      )
+      
       outerGroup.current.rotation.x = THREE.MathUtils.lerp(
         outerGroup.current.rotation.x,
-        targetY + scrollOffset * 1.8,
-        0.05
+        targetY + scrollOffset * 2.2,
+        0.08
       )
       outerGroup.current.rotation.z = THREE.MathUtils.lerp(
         outerGroup.current.rotation.z,
-        targetX + scrollOffset * 0.9,
-        0.05
+        targetX + scrollOffset * 1.2,
+        0.08
       )
 
-      const dynamicScale = Math.max(0.85, 1.25 - scrollOffset * 0.35)
+      const dynamicScale = Math.max(0.85, 1.28 - scrollOffset * 0.35)
       outerGroup.current.scale.setScalar(
-        THREE.MathUtils.lerp(outerGroup.current.scale.x, dynamicScale, 0.08)
+        THREE.MathUtils.lerp(outerGroup.current.scale.x, dynamicScale, 0.1)
       )
     }
 
     if (icosahedronRef.current) {
-      icosahedronRef.current.rotation.x += delta * 0.45
-      icosahedronRef.current.rotation.y += delta * 0.35
+      icosahedronRef.current.rotation.x += delta * 0.6
+      icosahedronRef.current.rotation.y += delta * 0.45
     }
     if (octahedronRef.current) {
-      octahedronRef.current.rotation.y -= delta * 0.7
-      octahedronRef.current.rotation.z += delta * 0.25
+      octahedronRef.current.rotation.y -= delta * 0.75
+      octahedronRef.current.rotation.z += delta * 0.35
     }
     if (torusRef.current) {
-      torusRef.current.rotation.x -= delta * 0.3
-      torusRef.current.rotation.z -= delta * 0.4
+      torusRef.current.rotation.x -= delta * 0.4
+      torusRef.current.rotation.z -= delta * 0.5
     }
     if (torusRef2.current) {
-      torusRef2.current.rotation.y += delta * 0.35
-      torusRef2.current.rotation.x += delta * 0.2
+      torusRef2.current.rotation.y += delta * 0.45
+      torusRef2.current.rotation.x += delta * 0.3
     }
     if (wireframeOuter.current) {
-      wireframeOuter.current.rotation.y -= delta * 0.2
-      wireframeOuter.current.rotation.x += delta * 0.2
+      wireframeOuter.current.rotation.y -= delta * 0.25
+      wireframeOuter.current.rotation.x += delta * 0.25
     }
     if (particlesRef.current) {
-      particlesRef.current.rotation.y += delta * 0.1
+      particlesRef.current.rotation.y += delta * 0.15
     }
   })
 
   return (
     <group ref={outerGroup}>
-      {/* Outer Hologram Cyan Wireframe Icosahedron */}
+      {/* Outer Forest Green Wireframe Icosahedron */}
       <mesh ref={wireframeOuter}>
-        <icosahedronGeometry args={[2.1, 1]} />
+        <icosahedronGeometry args={[2.15, 1]} />
         <meshBasicMaterial
           wireframe
-          color="#38bdf8"
+          color="#08482D"
           transparent
-          opacity={0.35}
+          opacity={0.4}
         />
       </mesh>
 
-      {/* Orbiting Tech Ring 1 (Electric Violet) */}
+      {/* Orbiting Tech Ring 1 (Soft Mint) */}
       <mesh ref={torusRef} rotation={[Math.PI / 4, 0, 0]}>
-        <torusGeometry args={[2.6, 0.018, 16, 100]} />
+        <torusGeometry args={[2.65, 0.022, 16, 100]} />
         <meshStandardMaterial
-          color="#818cf8"
-          emissive="#6366f1"
-          emissiveIntensity={0.6}
-          roughness={0.1}
-          metalness={0.9}
+          color="#DAE7C7"
+          emissive="#DAE7C7"
+          emissiveIntensity={0.5}
+          roughness={0.2}
+          metalness={0.6}
         />
       </mesh>
 
-      {/* Orbiting Tech Ring 2 (Neon Cyan) */}
+      {/* Orbiting Tech Ring 2 (Emerald Forest) */}
       <mesh ref={torusRef2} rotation={[-Math.PI / 3, Math.PI / 5, 0]}>
-        <torusGeometry args={[2.9, 0.015, 16, 100]} />
+        <torusGeometry args={[2.95, 0.018, 16, 100]} />
         <meshStandardMaterial
-          color="#06b6d4"
-          emissive="#06b6d4"
-          emissiveIntensity={0.5}
+          color="#08482D"
+          emissive="#0d5e3c"
+          emissiveIntensity={0.4}
           roughness={0.2}
           metalness={0.8}
         />
       </mesh>
 
-      {/* Primary Deep Glass Metallic Core */}
+      {/* Primary Metallic Core */}
       <mesh ref={octahedronRef}>
         <octahedronGeometry args={[1.35, 0]} />
         <meshStandardMaterial
-          color="#0f172a"
-          metalness={0.95}
-          roughness={0.1}
+          color="#08482D"
+          metalness={0.85}
+          roughness={0.12}
         />
       </mesh>
 
-      {/* Inner Dense Wireframe Lattice (Neon Purple) */}
+      {/* Inner Dense Wireframe Lattice */}
       <mesh ref={icosahedronRef}>
-        <icosahedronGeometry args={[1.37, 2]} />
+        <icosahedronGeometry args={[1.38, 2]} />
         <meshStandardMaterial
           wireframe
-          color="#c084fc"
+          color="#DAE7C7"
           roughness={0.2}
-          metalness={0.8}
-          emissive="#a855f7"
-          emissiveIntensity={0.25}
+          metalness={0.7}
         />
       </mesh>
 
-      {/* Swarming Stardust Nodes / Particles (Dual Color vibe) */}
+      {/* Swarming Studio Stardust Nodes */}
       <points ref={particlesRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -158,21 +167,21 @@ function PolyhedronSculpture({ scrollOffset, mousePos }: CoreMeshProps) {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.05}
-          color="#38bdf8"
+          size={0.06}
+          color="#08482D"
           transparent
-          opacity={0.8}
+          opacity={0.85}
           sizeAttenuation
         />
       </points>
 
-      {/* Core Node Glow Sphere */}
+      {/* Core Node Glass-Mint Sphere */}
       <mesh>
-        <sphereGeometry args={[0.35, 24, 24]} />
+        <sphereGeometry args={[0.38, 24, 24]} />
         <meshStandardMaterial
-          color="#6366f1"
-          emissive="#818cf8"
-          emissiveIntensity={1.2}
+          color="#DAE7C7"
+          emissive="#08482D"
+          emissiveIntensity={0.7}
           roughness={0.2}
         />
       </mesh>
@@ -188,29 +197,32 @@ interface CenterpieceCanvasProps {
 export function CenterpieceCanvas({ className = '', scrollOffset = 0 }: CenterpieceCanvasProps) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1
-    const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1)
-    setMousePos({ x, y })
-  }
+  // Global window pointer listener so the 3D sculpture tracks anywhere the mouse moves
+  useEffect(() => {
+    const handleGlobalPointerMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 2 - 1
+      const y = -(e.clientY / window.innerHeight) * 2 + 1
+      setMousePos({ x, y })
+    }
+    window.addEventListener('mousemove', handleGlobalPointerMove, { passive: true })
+    return () => window.removeEventListener('mousemove', handleGlobalPointerMove)
+  }, [])
 
   return (
     <div
-      onPointerMove={handlePointerMove}
-      className={`relative w-full h-full min-h-[440px] lg:min-h-[580px] pointer-events-auto ${className}`}
+      className={`relative w-full h-full min-h-[440px] lg:min-h-[580px] pointer-events-auto cursor-grab active:cursor-grabbing ${className}`}
     >
       <Canvas
         camera={{ position: [0, 0, 6.2], fov: 45 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[10, 10, 8]} intensity={2.0} color="#ffffff" />
-        <directionalLight position={[-10, -5, -4]} intensity={1.5} color="#38bdf8" />
-        <pointLight position={[0, 0, 0]} intensity={3.0} color="#818cf8" distance={6} />
+        <ambientLight intensity={1.3} />
+        <directionalLight position={[10, 10, 8]} intensity={2.4} color="#ffffff" />
+        <directionalLight position={[-10, -5, -4]} intensity={1.4} color="#DAE7C7" />
+        <pointLight position={[0, 0, 0]} intensity={2.8} color="#08482D" distance={6} />
 
-        <Float speed={2.0} rotationIntensity={0.4} floatIntensity={0.6}>
+        <Float speed={2.5} rotationIntensity={0.5} floatIntensity={0.7}>
           <PolyhedronSculpture
             scrollOffset={scrollOffset}
             mousePos={mousePos}

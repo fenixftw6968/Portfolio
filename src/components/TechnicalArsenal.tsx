@@ -6,44 +6,44 @@ export function TechnicalArsenal() {
   const activeGroup = STACK_GROUPS.find((g) => g.id === activeGroupId) || STACK_GROUPS[0]
 
   return (
-    <section id="stack" className="py-24 relative overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-0 w-[450px] h-[450px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none" />
-
+    <section id="stack" className="py-28 relative overflow-hidden bg-white/40 border-y border-[#08482D]/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/[0.08] pb-8 mb-14">
+        
+        {/* Section Header with Handwritten note */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#08482D]/10 pb-10 mb-14">
           <div>
-            <span className="font-mono text-xs font-semibold text-cyan-400 tracking-wider uppercase flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-              SECTION 05 // SYSTEM CAPABILITIES
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mt-2">
-              TECHNICAL ARSENAL
+            <div className="flex items-center gap-2.5 mb-3">
+              <span className="badge-mint font-mono text-xs sm:text-sm">SECTION 05 // SYSTEM CAPABILITIES</span>
+              <span className="font-handwriting text-2xl text-[#08482D] font-bold rotate-[-1deg]">
+                languages, backends &amp; AI
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#101410] font-display tracking-tight">
+              TECHNICAL ARSENAL.
             </h2>
           </div>
-          <p className="font-mono text-xs text-slate-400 mt-3 md:mt-0 max-w-sm">
+          <p className="text-sm text-[#414447] font-mono mt-4 md:mt-0 max-w-md leading-relaxed">
             Categorized by verified production deployment vs deliberate architectural exploration.
           </p>
         </div>
 
         {/* Group Selector Pills */}
-        <div className="flex flex-wrap gap-2 mb-8 font-mono text-xs">
+        <div className="flex flex-wrap gap-3 mb-10 font-mono text-sm">
           {STACK_GROUPS.map((group) => {
             const isActive = group.id === activeGroupId
             return (
               <button
                 key={group.id}
                 onClick={() => setActiveGroupId(group.id)}
-                className={`px-5 py-2.5 rounded-xl border transition-all cursor-pointer flex items-center gap-2.5 ${
+                className={`px-6 py-3 rounded-full border transition-all cursor-pointer flex items-center gap-3 ${
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 border-transparent text-white shadow-lg shadow-indigo-500/25 font-bold'
-                    : 'glass-panel text-slate-400 hover:text-white hover:border-white/20'
+                    ? 'bg-[#08482D] border-[#08482D] text-[#F5F8EF] shadow-md font-bold'
+                    : 'bg-white text-[#414447] border-[#08482D]/15 hover:text-[#0d120e] hover:border-[#08482D]/30'
                 }`}
               >
-                <span className="text-[10px] text-slate-400 opacity-60">{group.index}</span>
-                <span>{group.label}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-black/30 text-slate-300 font-mono">
+                <span className="text-xs opacity-75">{group.index}</span>
+                <span className="text-sm font-semibold">{group.label}</span>
+                <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${isActive ? 'bg-white/20 text-[#F5F8EF]' : 'bg-[#EBF2DF] text-[#08482D]'}`}>
                   {group.tags.length}
                 </span>
               </button>
@@ -52,64 +52,64 @@ export function TechnicalArsenal() {
         </div>
 
         {/* Active Group Details */}
-        <div className="p-8 rounded-3xl glass-panel">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/[0.08] mb-8 gap-3">
+        <div className="p-8 sm:p-12 rounded-3xl bg-white border border-[#08482D]/15 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 border-b border-[#08482D]/10 mb-10 gap-4">
             <div>
-              <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-wider">
+              <span className="font-mono text-sm text-[#08482D] font-bold uppercase tracking-wider block">
                 CATEGORY // {activeGroup.label}
               </span>
-              <p className="text-xs text-slate-400 mt-1 font-sans">
+              <p className="text-base text-[#414447] mt-1.5 font-sans leading-relaxed">
                 {activeGroup.summary}
               </p>
             </div>
-            <div className="flex items-center gap-4 font-mono text-xs">
-              <span className="flex items-center gap-2 text-white">
-                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
+            <div className="flex items-center gap-5 font-mono text-xs sm:text-sm shrink-0">
+              <span className="flex items-center gap-2.5 text-[#0d120e] font-semibold">
+                <span className="w-3 h-3 rounded-full bg-[#08482D]" />
                 SHIPPED IN PRODUCTION
               </span>
-              <span className="flex items-center gap-2 text-slate-400">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+              <span className="flex items-center gap-2.5 text-[#414447] font-semibold">
+                <span className="w-3 h-3 rounded-full bg-amber-500" />
                 ACTIVE STUDY
               </span>
             </div>
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {activeGroup.tags.map((skill) => {
               const isShipped = skill.status === 'shipped'
               return (
                 <div
                   key={skill.name}
-                  className="p-5 rounded-2xl bg-slate-900/60 border border-white/[0.06] hover:border-cyan-500/40 transition-all flex flex-col justify-between group"
+                  className="p-6 rounded-2xl bg-[#F5F8EF]/80 border border-[#08482D]/10 hover:border-[#08482D]/35 transition-all flex flex-col justify-between group hover:shadow-md"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-mono text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">
+                    <div className="flex items-center justify-between mb-3.5">
+                      <h4 className="font-display text-lg font-bold text-[#0d120e] group-hover:text-[#08482D] transition-colors">
                         {skill.name}
                       </h4>
                       <span
-                        className={`text-[9px] font-mono px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold ${
+                        className={`text-xs font-mono px-3 py-1 rounded-full uppercase tracking-wider font-bold ${
                           isShipped
-                            ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30'
-                            : 'bg-amber-500/10 text-amber-300 border border-amber-500/30'
+                            ? 'bg-[#DAE7C7] text-[#08482D] border border-[#C8DBAE]'
+                            : 'bg-amber-100 text-amber-800 border border-amber-300'
                         }`}
                       >
                         {skill.status}
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                    <p className="text-sm text-[#414447] leading-relaxed font-sans">
                       {skill.note}
                     </p>
                   </div>
 
                   {skill.projects && skill.projects.length > 0 && (
-                    <div className="mt-4 pt-3 border-t border-white/[0.06] flex flex-wrap gap-1.5">
+                    <div className="mt-5 pt-4 border-t border-[#08482D]/10 flex flex-wrap gap-2">
                       {skill.projects.map((proj) => (
                         <span
                           key={proj}
-                          className="font-mono text-[9px] px-2 py-0.5 rounded-md bg-white/[0.04] text-slate-400 border border-white/[0.06]"
+                          className="font-mono text-xs px-2.5 py-1 rounded-full bg-white text-[#08482D] border border-[#08482D]/15 font-semibold"
                         >
                           #{proj}
                         </span>
@@ -122,23 +122,23 @@ export function TechnicalArsenal() {
           </div>
         </div>
 
-        {/* Global Key Architecture Competencies in Modern Cards */}
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-          <div className="p-6 rounded-2xl glass-panel">
-            <span className="text-cyan-400 block font-bold mb-2 text-sm tracking-wide">CONCURRENCY &amp; LOCKS</span>
-            <p className="text-slate-400 text-xs font-sans leading-relaxed">
+        {/* Global Key Architecture Competencies in Studio Cards */}
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono">
+          <div className="p-8 rounded-3xl reelmark-card">
+            <span className="text-[#08482D] block font-bold mb-2.5 text-base sm:text-lg font-display tracking-wide">CONCURRENCY &amp; LOCKS</span>
+            <p className="text-[#414447] text-sm sm:text-base font-sans leading-relaxed">
               Pessimistic locking, `FOR UPDATE SKIP LOCKED` query patterns, and race hazard mitigations in live match lobbies.
             </p>
           </div>
-          <div className="p-6 rounded-2xl glass-panel">
-            <span className="text-cyan-400 block font-bold mb-2 text-sm tracking-wide">AUTH &amp; INTEGRITY</span>
-            <p className="text-slate-400 text-xs font-sans leading-relaxed">
+          <div className="p-8 rounded-3xl reelmark-card">
+            <span className="text-[#08482D] block font-bold mb-2.5 text-base sm:text-lg font-display tracking-wide">AUTH &amp; INTEGRITY</span>
+            <p className="text-[#414447] text-sm sm:text-base font-sans leading-relaxed">
               OIDC ID token cryptographic verification, JWT stateless identity, duplicate-link preventions, and tamper-resistant matches.
             </p>
           </div>
-          <div className="p-6 rounded-2xl glass-panel">
-            <span className="text-cyan-400 block font-bold mb-2 text-sm tracking-wide">MODEL EXPLAINABILITY</span>
-            <p className="text-slate-400 text-xs font-sans leading-relaxed">
+          <div className="p-8 rounded-3xl reelmark-card">
+            <span className="text-[#08482D] block font-bold mb-2.5 text-base sm:text-lg font-display tracking-wide">MODEL EXPLAINABILITY</span>
+            <p className="text-[#414447] text-sm sm:text-base font-sans leading-relaxed">
               DenseNet121 transfer learning coupled with Grad-CAM visual gradients for auditable clinical decision support.
             </p>
           </div>

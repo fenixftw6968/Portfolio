@@ -14,7 +14,7 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30)
+      setScrolled(window.scrollY > 25)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -42,12 +42,12 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#030712]/80 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl shadow-indigo-950/20 py-3'
+          ? 'bg-[#F5F8EF]/95 backdrop-blur-md border-b border-[#08482D]/15 py-3 shadow-md'
           : 'bg-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand / Logo with glowing badge */}
+        {/* Brand with Studio Monogram */}
         <div className="flex items-center gap-3">
           <a
             href="#home"
@@ -55,36 +55,32 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
               e.preventDefault()
               onSelectSection('home')
             }}
-            className="group flex items-center gap-2.5 font-mono text-sm tracking-wider"
+            className="group flex items-center gap-3"
           >
-            <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/25">
-              <div className="w-full h-full bg-[#090d16] rounded-lg flex items-center justify-center">
-                <span className="font-bold text-xs text-white group-hover:text-cyan-400 transition-colors">
-                  K
-                </span>
-              </div>
+            <div className="w-10 h-10 rounded-full bg-[#08482D] text-[#F5F8EF] flex items-center justify-center font-black text-base tracking-tight shadow-md group-hover:bg-[#053320] transition-colors">
+              K.
             </div>
             <div className="flex flex-col">
-              <span className="font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">
-                {SITE.domain}
+              <span className="font-extrabold tracking-tight text-[#0d120e] group-hover:text-[#08482D] transition-colors font-display text-base">
+                KARTIK BHANGALE
               </span>
-              <span className="text-[9px] text-slate-400 font-sans tracking-normal -mt-0.5">
-                ENGINEER PORTFOLIO
+              <span className="text-xs text-[#414447] font-semibold">
+                AI &amp; DS Engineer • PICT
               </span>
             </div>
           </a>
 
-          {/* Telemetry pill */}
-          <div className="hidden lg:flex items-center gap-2 pl-4 ml-2 border-l border-white/[0.08] text-xs font-mono text-slate-400">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping mr-1" />
-            <span className="text-slate-300">PICT / 3RD YEAR</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-indigo-400 font-semibold">{time}</span>
+          {/* Time & Location Badge */}
+          <div className="hidden lg:flex items-center gap-2 pl-4 ml-2 border-l border-[#08482D]/15 text-sm text-[#414447] font-medium">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#08482D] animate-pulse" />
+            <span>PUNE, IN</span>
+            <span>•</span>
+            <span className="text-[#08482D] font-mono font-bold">{time}</span>
           </div>
         </div>
 
-        {/* Floating pill navigation items */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-slate-900/60 border border-white/[0.08] backdrop-blur-md">
+        {/* Studio Pill Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-[#EBF2DF] border border-[#BED4A0] backdrop-blur-sm shadow-sm">
           {SECTIONS.map((sec) => {
             const isActive = activeSection === sec.id
             return (
@@ -95,10 +91,10 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
                   e.preventDefault()
                   onSelectSection(sec.id)
                 }}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md shadow-indigo-500/25 font-semibold'
-                    : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                    ? 'bg-[#08482D] text-[#F5F8EF] shadow-sm'
+                    : 'text-[#0d120e] hover:text-[#08482D] hover:bg-[#DAE7C7]'
                 }`}
               >
                 {sec.label}
@@ -108,15 +104,15 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <button
             onClick={onOpenTerminal}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-white/[0.1] hover:border-indigo-500/50 text-slate-300 hover:text-white text-xs font-mono transition-all cursor-pointer shadow-sm group"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#EBF2DF] hover:bg-[#DAE7C7] border border-[#BED4A0] text-[#08482D] text-xs font-mono font-bold transition-all cursor-pointer shadow-sm group"
             title="Open Interactive Terminal"
           >
-            <Terminal className="w-3.5 h-3.5 text-cyan-400 group-hover:rotate-12 transition-transform" />
-            <span className="hidden sm:inline">TERMINAL</span>
-            <span className="text-[10px] px-1 py-0.5 rounded bg-white/[0.06] text-slate-400 font-mono hidden md:inline">
+            <Terminal className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+            <span className="hidden sm:inline">CLI</span>
+            <span className="text-xs px-1.5 py-0.5 rounded bg-[#DAE7C7] text-[#08482D] font-mono hidden md:inline">
               ~
             </span>
           </button>
@@ -125,13 +121,10 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
             href={SITE.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative inline-flex items-center justify-center p-[1px] overflow-hidden rounded-lg font-medium group transition-all"
+            className="btn-forest text-xs py-2.5 px-5 shadow-sm"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 group-hover:opacity-100 transition-opacity"></span>
-            <span className="relative flex items-center gap-1.5 px-4 py-2 transition-all ease-out bg-slate-950 rounded-[7px] group-hover:bg-opacity-0 text-xs font-semibold text-white">
-              <span>GITHUB</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </span>
+            <span>GITHUB</span>
+            <ArrowUpRight className="w-4 h-4" />
           </a>
         </div>
       </div>

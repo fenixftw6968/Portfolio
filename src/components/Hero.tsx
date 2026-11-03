@@ -1,6 +1,6 @@
 import { CenterpieceCanvas } from './CenterpieceCanvas'
 import { HERO_STATEMENT, HERO_MODES, SITE } from '../config/site'
-import { ArrowDown, Terminal, Sparkles, Code2, Database, Brain } from 'lucide-react'
+import { ArrowDown, Terminal } from 'lucide-react'
 
 interface HeroProps {
   scrollOffset: number
@@ -9,194 +9,185 @@ interface HeroProps {
 }
 
 export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps) {
-  const modeIcons = [Database, Code2, Brain]
-
   return (
     <section
       id="home"
-      className="relative min-h-screen pt-32 pb-20 flex flex-col justify-center overflow-hidden bg-grid-modern"
+      className="relative min-h-screen pt-32 pb-24 flex flex-col justify-center overflow-hidden"
     >
-      {/* Aurora Ambient Glow Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none animate-float-slow" />
-      <div className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none animate-float-slow [animation-delay:4s]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
-        {/* Status Pill Badge */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-6 border-b border-white/[0.06] text-xs font-mono text-slate-400">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-white/[0.08] backdrop-blur-md shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-slate-200 font-medium tracking-wide">
-              {SITE.availability}
-            </span>
-            <span className="text-slate-600">•</span>
-            <span className="text-cyan-400">{SITE.institutionShort} 2026</span>
+        
+        {/* Soft Mint Introductory Badge & Animated Handwritten Annotation */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="badge-mint shadow-sm hover:scale-105 transition-transform text-sm font-bold">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#08482D] animate-ping" />
+              <span>{SITE.availability}</span>
+              <span className="text-[#08482D]/40">•</span>
+              <span>{SITE.institutionShort} 2026</span>
+            </div>
+            
+            {/* Prominent handwritten annotation */}
+            <div className="hidden sm:flex items-center gap-2 font-handwriting text-2xl text-[#08482D] font-bold animate-float">
+              <span>portfolio v3.0 / real telemetry</span>
+              <svg className="w-6 h-6 text-[#08482D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <path d="M4 14C8 18 14 18 19 12M19 12L15 11M19 12L18 16" />
+              </svg>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-400">
-            <span>{SITE.location}</span>
-            <span className="text-indigo-400 font-semibold">{SITE.batch}</span>
+          <div className="text-sm text-[#414447] font-semibold hidden md:block">
+            {SITE.location} • <span className="text-[#08482D] font-mono font-bold">{SITE.batch}</span>
           </div>
         </div>
 
-        {/* Hero Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6 lg:py-12">
-          {/* Left Column: Modern Hero Narrative */}
-          <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
+        {/* Hero Grid: Editorial Typography + Floating 3D Centerpiece */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center py-6 lg:py-10">
+          
+          {/* Left Column: Bold Asymmetric Typography */}
+          <div className="lg:col-span-7 flex flex-col justify-center space-y-7">
             <div>
-              <p className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-cyan-400 mb-3 flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                SYSTEM ARCHITECT &amp; ALGORITHMIC SPECIALIST
-              </p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-black tracking-tight text-white uppercase leading-[0.92]">
+              <span className="text-sm font-mono font-extrabold tracking-widest text-[#08482D] uppercase block mb-3">
+                ENGINEER &amp; ALGORITHMIC SPECIALIST
+              </span>
+              <h1 className="text-6xl sm:text-7xl md:text-8xl xl:text-9xl font-black tracking-tight text-[#0d120e] font-display uppercase leading-[0.9] drop-shadow-sm">
                 KARTIK
                 <br />
-                <span className="text-gradient-cyan">
-                  BHANGALE
+                <span className="text-[#08482D]">
+                  BHANGALE.
                 </span>
               </h1>
             </div>
 
-            {/* Cinematic Mantra in Modern Glowing Glass Badge */}
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.01] border border-white/[0.08] backdrop-blur-xl shadow-xl shadow-indigo-950/20">
-              <div className="font-mono text-sm sm:text-base font-bold text-white tracking-wide flex flex-wrap gap-2">
+            {/* Reelmark-style Editorial Mantra Block */}
+            <div className="p-7 sm:p-8 rounded-3xl reelmark-card-mint relative group border-2 border-[#BED4A0]">
+              {/* Handwritten note on top right */}
+              <div className="absolute -top-4 right-6 px-4 py-1 rounded-full bg-[#08482D] text-[#F5F8EF] font-handwriting text-base font-bold shadow-md rotate-2 group-hover:rotate-6 transition-transform">
+                core mantra
+              </div>
+
+              <div className="font-display text-lg sm:text-xl font-black text-[#08482D] tracking-tight flex flex-wrap gap-2.5 mb-3">
                 {HERO_STATEMENT.map((phrase, idx) => (
                   <span
                     key={idx}
-                    className={`px-2 py-0.5 rounded-md ${
-                      phrase === 'I UNDERSTAND.'
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                        : phrase === 'I REBUILD.'
-                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
-                        : 'bg-white/[0.05] text-slate-200'
+                    className={`inline-block mr-1.5 transition-transform hover:scale-105 ${
+                      phrase === 'I UNDERSTAND.' ? 'underline decoration-3 decoration-[#08482D] underline-offset-4' : ''
                     }`}
                   >
                     {phrase}
                   </span>
                 ))}
               </div>
-              <p className="mt-4 text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
-                Building resilient backend systems, solving high-constraint algorithmic problems, and exploring applied neural vision. Third-year AI &amp; DS undergraduate at PICT Pune with a focus on verified architectures and zero-failure designs.
+              <p className="text-base sm:text-lg text-[#0d120e] font-medium leading-relaxed font-sans">
+                Building resilient backend systems, solving high-constraint algorithmic problems, and exploring machine intelligence. Third-year AI &amp; DS undergraduate at PICT Pune with an obsession for verifiable architectures and zero-failure designs.
               </p>
             </div>
 
-            {/* Core Capability Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              {HERO_MODES.map((mode, i) => {
-                const IconComponent = modeIcons[i % modeIcons.length]
-                return (
-                  <div
-                    key={i}
-                    className="p-4 rounded-xl glass-panel glass-panel-hover flex flex-col justify-between group cursor-default"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="p-2 rounded-lg bg-indigo-500/10 text-cyan-400 group-hover:bg-indigo-500/20 group-hover:text-cyan-300 transition-colors">
-                        <IconComponent className="w-4 h-4" />
-                      </div>
-                      <span className="text-[10px] font-mono text-slate-500">0{i + 1}</span>
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
-                        {mode.label}
-                      </p>
-                      <p className="text-[10px] font-mono text-slate-400 mt-1">
-                        {mode.detail}
-                      </p>
-                    </div>
+            {/* Core Capability Cards in Studio Style with larger typography */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
+              {HERO_MODES.map((mode, i) => (
+                <div
+                  key={i}
+                  className="p-5 rounded-2xl reelmark-card flex flex-col justify-between group cursor-default"
+                >
+                  <span className="text-xs font-mono font-bold text-[#414447] mb-2.5 block group-hover:text-[#08482D] transition-colors">
+                    0{i + 1} // FOCUS
+                  </span>
+                  <div>
+                    <p className="text-sm font-black text-[#0d120e] font-display uppercase tracking-wider group-hover:text-[#08482D] transition-colors">
+                      {mode.label}
+                    </p>
+                    <p className="text-xs text-[#414447] font-semibold mt-1.5 leading-snug">
+                      {mode.detail}
+                    </p>
                   </div>
-                )
-              })}
+                </div>
+              ))}
             </div>
 
             {/* Hero Actions */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
+            <div className="flex flex-wrap items-center gap-4 pt-3">
               <button
                 onClick={onExploreClick}
-                className="relative inline-flex items-center justify-center p-[1px] overflow-hidden rounded-xl font-medium group transition-all cursor-pointer shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
+                className="btn-forest cursor-pointer shadow-md text-base"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500"></span>
-                <span className="relative flex items-center gap-2.5 px-6 py-3.5 transition-all ease-out bg-slate-950 rounded-[11px] group-hover:bg-opacity-80 text-xs font-bold text-white tracking-wider uppercase">
-                  <span>EXPLORE TELEMETRY</span>
-                  <ArrowDown className="w-4 h-4 text-cyan-400 group-hover:translate-y-0.5 transition-transform" />
-                </span>
+                <span>EXPLORE WORK</span>
+                <ArrowDown className="w-5 h-5" />
               </button>
 
               <button
                 onClick={onOpenTerminal}
-                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-white/[0.1] hover:border-indigo-500/50 text-white font-mono text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md group"
+                className="btn-mint cursor-pointer shadow-sm text-base"
               >
-                <Terminal className="w-4 h-4 text-indigo-400 group-hover:rotate-12 transition-transform" />
-                <span>LAUNCH TERMINAL</span>
+                <Terminal className="w-5 h-5 text-[#08482D]" />
+                <span>INTERACTIVE CLI</span>
               </button>
             </div>
           </div>
 
-          {/* Right Column: 3D Centerpiece with Modern Glass Orb Frame */}
+          {/* Right Column: Floating 3D Geometric Centerpiece */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
-            <div className="relative w-full aspect-square max-w-[520px] rounded-3xl p-3 glass-panel border-white/[0.1] shadow-2xl shadow-indigo-950/40">
-              {/* Top Glass Header */}
-              <div className="absolute top-4 left-6 right-6 flex justify-between items-center text-[10px] font-mono text-slate-400 z-20 pointer-events-none">
-                <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                  3D HARDWARE ACCELERATED CORE
-                </span>
-                <span className="px-2 py-0.5 rounded-full bg-white/[0.06] text-indigo-300 font-semibold">
-                  60 FPS
-                </span>
+            <div className="relative w-full aspect-square max-w-[520px] rounded-3xl p-3.5 bg-white border-2 border-[#08482D]/15 shadow-xl shadow-[#08482D]/8 transition-transform duration-500 hover:shadow-2xl">
+              
+              {/* Handwritten Note Pin with Float Animation */}
+              <div className="absolute -top-4 -left-3 z-20 px-4 py-1.5 bg-[#DAE7C7] text-[#08482D] rounded-full font-handwriting text-lg font-bold shadow-md animate-float border border-[#BED4A0]">
+                move cursor to orbit 3d
+              </div>
+
+              {/* Top Studio Indicator */}
+              <div className="absolute top-4 right-6 flex items-center gap-2 text-xs font-mono font-bold text-[#414447] z-20 pointer-events-none">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#08482D] animate-ping" />
+                <span>THREE.JS CORE</span>
               </div>
 
               {/* Three.js Centerpiece Canvas */}
-              <div className="w-full h-full rounded-2xl overflow-hidden bg-slate-950/60 relative">
+              <div className="w-full h-full rounded-2xl overflow-hidden bg-[#F5F8EF] relative">
                 <CenterpieceCanvas scrollOffset={scrollOffset} />
               </div>
 
               {/* Bottom Telemetry Overlay */}
-              <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center text-[10px] font-mono text-slate-400 z-20 pointer-events-none">
-                <span>INTERACTIVE POINTER ORBIT</span>
-                <span className="text-cyan-400">160 NODES ACTIVE</span>
+              <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center text-xs font-mono font-bold text-[#414447] z-20 pointer-events-none">
+                <span>SCULPTURE // 180 NODES</span>
+                <span className="text-[#08482D]">DRAG &amp; ROTATE</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Telemetry bottom stats bar in modern glass cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10 border-t border-white/[0.06]">
-          <div className="p-4 rounded-xl glass-panel glass-panel-hover">
-            <span className="text-slate-400 text-[11px] font-mono block">LEETCODE RATING</span>
+        {/* Telemetry bottom stats bar with bold clear metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 border-t border-[#08482D]/15">
+          <div className="p-6 rounded-2xl reelmark-card">
+            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">LEETCODE RATING</span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl sm:text-3xl font-bold text-white font-mono">1784</span>
-              <span className="text-xs font-mono text-cyan-400 font-semibold">PEAK 1879</span>
+              <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1784</span>
+              <span className="text-xs font-mono font-extrabold text-[#08482D]">PEAK 1879</span>
             </div>
-            <span className="text-[10px] text-slate-500 font-mono">Top 9.13% Globally</span>
+            <span className="text-xs text-[#414447] font-semibold mt-1 block">Top 9.13% Worldwide</span>
           </div>
 
-          <div className="p-4 rounded-xl glass-panel glass-panel-hover">
-            <span className="text-slate-400 text-[11px] font-mono block">TOTAL CP SOLVES</span>
+          <div className="p-6 rounded-2xl reelmark-card">
+            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">TOTAL CP SOLVES</span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl sm:text-3xl font-bold text-gradient-emerald font-mono">930+</span>
-              <span className="text-xs font-mono text-emerald-400">SOLUTIONS</span>
+              <span className="text-3xl sm:text-4xl font-black text-[#08482D] font-display">930+</span>
+              <span className="text-xs font-mono font-bold text-[#414447]">SOLUTIONS</span>
             </div>
-            <span className="text-[10px] text-slate-500 font-mono">LC: 705 / CF: 62 / CC: 163</span>
+            <span className="text-xs text-[#414447] font-semibold mt-1 block">LC: 705 / CF: 62 / CC: 163</span>
           </div>
 
-          <div className="p-4 rounded-xl glass-panel glass-panel-hover">
-            <span className="text-slate-400 text-[11px] font-mono block">CODEFORCES RATING</span>
+          <div className="p-6 rounded-2xl reelmark-card">
+            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">CODEFORCES RATING</span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl sm:text-3xl font-bold text-white font-mono">1018</span>
-              <span className="text-xs font-mono text-indigo-400">NEWBIE</span>
+              <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1018</span>
+              <span className="text-xs font-mono font-extrabold text-[#08482D]">NEWBIE</span>
             </div>
-            <span className="text-[10px] text-slate-500 font-mono">4 Rated Contests</span>
+            <span className="text-xs text-[#414447] font-semibold mt-1 block">4 Rated Contests</span>
           </div>
 
-          <div className="p-4 rounded-xl glass-panel glass-panel-hover">
-            <span className="text-slate-400 text-[11px] font-mono block">ACADEMIC BASE</span>
+          <div className="p-6 rounded-2xl reelmark-card">
+            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">ACADEMIC BASE</span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-xl sm:text-2xl font-bold text-white font-mono truncate">PICT PUNE</span>
+              <span className="text-2xl sm:text-3xl font-black text-[#0d120e] font-display truncate">PICT PUNE</span>
             </div>
-            <span className="text-[10px] text-slate-500 font-mono">AI &amp; DS B.Tech (2026)</span>
+            <span className="text-xs text-[#414447] font-semibold mt-1 block">B.Tech AI &amp; DS (2026)</span>
           </div>
         </div>
       </div>

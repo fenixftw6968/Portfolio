@@ -9,7 +9,8 @@ import { TechnicalArsenal } from './components/TechnicalArsenal'
 import { InteractiveTerminal } from './components/InteractiveTerminal'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
-import { ScrollVideoBackdrop } from './components/ScrollVideoBackdrop'
+import { InteractiveCursor } from './components/InteractiveCursor'
+import { FloatingDecorations } from './components/FloatingDecorations'
 
 export function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -64,24 +65,28 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#030712] text-[#f8fafc] selection:bg-indigo-500 selection:text-white relative">
-      {/* Scroll-driven aerial motion video backdrop */}
-      <ScrollVideoBackdrop />
+    <div className="min-h-screen bg-[#F5F8EF] text-[#101410] selection:bg-[#DAE7C7] selection:text-[#08482D] relative font-sans overflow-x-hidden">
+      
+      {/* Interactive Spring Follower Cursor */}
+      <InteractiveCursor />
 
-      {/* Top glowing scroll progress indicator */}
+      {/* Floating Parallax Background Decorations */}
+      <FloatingDecorations />
+
+      {/* Top subtle scroll progress bar */}
       <div
-        className="fixed top-0 left-0 h-[2.5px] bg-gradient-to-r from-indigo-500 via-cyan-400 to-purple-500 z-50 transition-all duration-75 shadow-[0_0_12px_rgba(6,182,212,0.8)]"
+        className="fixed top-0 left-0 h-[3px] bg-[#08482D] z-50 transition-all duration-75 shadow-xs"
         style={{ width: `${scrollProgress * 100}%` }}
       />
 
-      {/* Modern Floating Header / Navigation */}
+      {/* Floating Studio Navigation */}
       <Navigation
         activeSection={activeSection}
         onSelectSection={scrollToSection}
         onOpenTerminal={() => setIsTerminalOpen(true)}
       />
 
-      {/* Main Content Sections with elevated backdrop blur */}
+      {/* Main Content Sections */}
       <main className="relative z-10">
         <Hero
           scrollOffset={scrollProgress}
@@ -102,10 +107,8 @@ export function App() {
         <Contact />
       </main>
 
-      {/* Modern Footer */}
-      <div className="relative z-10">
-        <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
-      </div>
+      {/* Studio Footer */}
+      <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
 
       {/* Interactive Command Terminal Modal */}
       <InteractiveTerminal
