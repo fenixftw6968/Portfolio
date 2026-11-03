@@ -1,10 +1,10 @@
-import { CenterpieceCanvas } from './CenterpieceCanvas'
-import { HERO_STATEMENT, HERO_MODES, SITE } from '../config/site'
-import { ArrowDown, Terminal } from 'lucide-react'
+import { Hero3DScene } from './Hero3DScene'
+import { SITE } from '../config/site'
+import { ArrowDown, Mail, Terminal, Sparkles, Compass } from 'lucide-react'
 import { motion } from 'motion/react'
-import { ParticlesBackground } from './ParticlesBackground'
 import { Magnetic } from './Magnetic'
 import { SpotlightCard } from './SpotlightCard'
+import { useTheme } from '../context/ThemeContext'
 
 interface HeroProps {
   scrollOffset: number
@@ -13,346 +13,238 @@ interface HeroProps {
 }
 
 export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps) {
-  // Stagger variants for name revelation
-  const nameVariants = {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+
+  // Stagger variants for name and role
+  const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.1,
+        staggerChildren: 0.09,
+        delayChildren: 0.15,
       },
     },
   }
 
-  const charVariants = {
-    hidden: { opacity: 0, y: 35, rotateX: -60 },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
     visible: {
       opacity: 1,
       y: 0,
-      rotateX: 0,
+      filter: 'blur(0px)',
       transition: {
         type: 'spring' as const,
-        damping: 14,
-        stiffness: 120,
+        damping: 18,
+        stiffness: 90,
       },
     },
   }
+
+  const nameLetters = 'KARTIK BHANGALE'.split('')
 
   return (
     <section
       id="home"
-      className="relative min-h-screen pt-32 pb-24 flex flex-col justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-between pt-28 pb-14 overflow-hidden"
     >
-      {/* Animated Subtle Particle Background */}
-      <ParticlesBackground />
+      {/* 1. Full-screen Cinematic 3D Scene with floating metallic sculpture & thousands of stardust particles */}
+      <Hero3DScene scrollOffset={scrollOffset} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 relative">
+      {/* Atmospheric vignette overlays */}
+      <div className="absolute inset-0 pointer-events-none bg-radial-[circle_at_center,transparent_30%,rgba(8,11,9,0.7)_100%] dark:block hidden z-[1]" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none bg-gradient-to-t from-[#080B09] dark:from-[#080B09] light:from-[#F5F8EF] to-transparent z-[1]" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 relative flex-1 flex flex-col justify-center">
         
-        {/* Soft Mint Introductory Badge & Animated Handwritten Annotation */}
+        {/* Top Status & Telemetry Pill */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-4"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-2"
         >
           <div className="flex items-center gap-3">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="badge-mint shadow-sm text-sm font-bold cursor-default"
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-[#08482D] animate-ping" />
+            <div className="badge-mint shadow-lg backdrop-blur-md text-xs font-mono font-bold tracking-wider cursor-default">
+              <span className="w-2 h-2 rounded-full bg-[#34D399] animate-ping" />
               <span>{SITE.availability}</span>
-              <span className="text-[#08482D]/40">•</span>
+              <span className="opacity-40">•</span>
               <span>{SITE.institutionShort} 2028</span>
-            </motion.div>
-            
-            {/* Prominent handwritten annotation */}
-            <motion.div
-              animate={{
-                y: [0, -8, 0],
-                rotate: [-1, 1, -1],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              className="hidden sm:flex items-center gap-2 font-handwriting text-2xl text-[#08482D] font-bold"
-            >
-              <span>portfolio v3.0 / real telemetry</span>
-              <svg className="w-6 h-6 text-[#08482D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M4 14C8 18 14 18 19 12M19 12L15 11M19 12L18 16" />
-              </svg>
-            </motion.div>
+            </div>
+
+            <div className="hidden sm:flex items-center gap-2 font-handwriting text-xl text-[#34D399] dark:text-[#34D399] light:text-[#08482D] font-bold">
+              <span>active creative // real telemetry</span>
+            </div>
           </div>
 
-          <div className="text-sm text-[#414447] font-semibold hidden md:block">
-            {SITE.location} • <span className="text-[#08482D] font-mono font-bold">{SITE.batch}</span>
+          <div className="text-xs text-[#8A9684] dark:text-[#8A9684] light:text-[#414447] font-mono font-semibold hidden md:block">
+            {SITE.location} • <span className="text-[#34D399] dark:text-[#34D399] light:text-[#08482D] font-bold">B.TECH AI &amp; DS</span>
           </div>
         </motion.div>
 
-        {/* Hero Grid: Editorial Typography + Floating 3D Centerpiece */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center py-6 lg:py-10">
+        {/* Hero Central Narrative Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-6">
           
-          {/* Left Column: Bold Asymmetric Typography with Staggered Character Reveal */}
-          <div className="lg:col-span-7 flex flex-col justify-center space-y-7">
-            <div>
-              <motion.span
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.05 }}
-                className="text-sm font-mono font-extrabold tracking-widest text-[#08482D] uppercase block mb-3"
-              >
-                ENGINEER &amp; ALGORITHMIC SPECIALIST
-              </motion.span>
-              
-              <h1 className="text-6xl sm:text-7xl md:text-8xl xl:text-9xl font-black tracking-tight text-[#0d120e] font-display uppercase leading-[0.9] drop-shadow-sm select-none">
-                <motion.div
-                  className="flex flex-wrap overflow-hidden"
-                  variants={nameVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  {'KARTIK'.split('').map((char, index) => (
-                    <motion.span
-                      key={index}
-                      variants={charVariants}
-                      className="inline-block hover:text-[#08482D] transition-colors duration-200"
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </motion.div>
-                
-                <motion.div
-                  className="flex flex-wrap text-[#08482D] overflow-hidden"
-                  variants={nameVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delayChildren: 0.35 }}
-                >
-                  {'BHANGALE.'.split('').map((char, index) => (
-                    <motion.span
-                      key={index}
-                      variants={charVariants}
-                      className="inline-block hover:opacity-80 transition-opacity"
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              </h1>
-            </div>
-
-            {/* Reelmark-style Editorial Mantra Block */}
+          <div className="lg:col-span-8 flex flex-col justify-center space-y-6">
+            
+            {/* Hi, I'm Introduction */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-              whileHover={{ y: -3 }}
-              className="p-7 sm:p-8 rounded-3xl reelmark-card-mint relative group border-2 border-[#BED4A0]"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-2"
             >
-              {/* Handwritten note on top right */}
-              <div className="absolute -top-4 right-6 px-4 py-1 rounded-full bg-[#08482D] text-[#F5F8EF] font-handwriting text-base font-bold shadow-md rotate-2 group-hover:rotate-6 transition-transform">
-                core mantra
-              </div>
+              <motion.span
+                variants={itemVariants}
+                className="text-sm font-mono font-extrabold tracking-[0.25em] text-[#34D399] dark:text-[#34D399] light:text-[#08482D] uppercase block"
+              >
+                HI, I&apos;M
+              </motion.span>
 
-              <div className="font-display text-lg sm:text-xl font-black text-[#08482D] tracking-tight flex flex-wrap gap-2.5 mb-3">
-                {HERO_STATEMENT.map((phrase, idx) => (
+              {/* Large Expressive Name Reveal */}
+              <h1 className="text-6xl sm:text-7xl md:text-8xl xl:text-9xl font-black tracking-tight text-white dark:text-white light:text-[#0d120e] font-display uppercase leading-[0.88] drop-shadow-2xl select-none">
+                {nameLetters.map((char, index) => (
                   <motion.span
-                    key={idx}
-                    whileHover={{ scale: 1.08 }}
-                    className={`inline-block mr-1.5 transition-transform ${
-                      phrase === 'I UNDERSTAND.' ? 'underline decoration-3 decoration-[#08482D] underline-offset-4' : ''
+                    key={index}
+                    variants={itemVariants}
+                    className={`inline-block transition-colors duration-200 ${
+                      char === ' ' ? 'mr-4 sm:mr-6' : 'hover:text-[#34D399]'
                     }`}
                   >
-                    {phrase}
+                    {char}
                   </motion.span>
                 ))}
+              </h1>
+
+              {/* Developer Title */}
+              <motion.div variants={itemVariants} className="pt-2">
+                <span className="text-xl sm:text-2xl md:text-3xl font-bold font-mono tracking-tight text-[#E0E7DC] dark:text-[#E0E7DC] light:text-[#08482D] block">
+                  Creative Developer / AI &amp; Backend Engineer
+                </span>
+              </motion.div>
+            </motion.div>
+
+            {/* Core Mission Statement */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.45 }}
+              className="p-6 sm:p-8 rounded-3xl reelmark-card-mint backdrop-blur-xl relative group max-w-2xl"
+            >
+              <div className="absolute -top-3.5 right-6 px-3.5 py-1 rounded-full bg-[#10B981] text-[#080B09] font-mono text-xs font-black shadow-lg uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>ACTIVE THEORY AESTHETIC</span>
               </div>
-              <p className="text-base sm:text-lg text-[#0d120e] font-medium leading-relaxed font-sans">
-                Building resilient backend systems, solving high-constraint algorithmic problems, and exploring machine intelligence. Third-year AI &amp; DS undergraduate at PICT Pune with an obsession for verifiable architectures and zero-failure designs.
+
+              <p className="text-lg sm:text-2xl text-white dark:text-white light:text-[#0d120e] font-display font-medium leading-relaxed">
+                I build intelligent systems and interactive digital experiences.
+              </p>
+              <p className="mt-3 text-sm sm:text-base text-[#8A9684] dark:text-[#8A9684] light:text-[#414447] font-sans leading-relaxed">
+                Merging high-throughput backend architecture, applied computer vision, and real-time 3D web graphics. Focused on zero-trust correctness, resilient distributed logic, and fluid motion design.
               </p>
             </motion.div>
 
-            {/* Core Capability Cards with Interactive Spotlight Hover */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
-              {HERO_MODES.map((mode, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 + i * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-                  whileHover={{ y: -6, scale: 1.02 }}
-                >
-                  <SpotlightCard
-                    spotlightColor="rgba(8, 72, 45, 0.12)"
-                    className="p-5 rounded-2xl reelmark-card flex flex-col justify-between group cursor-default h-full"
-                  >
-                    <span className="text-xs font-mono font-bold text-[#414447] mb-2.5 block group-hover:text-[#08482D] transition-colors">
-                      0{i + 1} // FOCUS
-                    </span>
-                    <div>
-                      <p className="text-sm font-black text-[#0d120e] font-display uppercase tracking-wider group-hover:text-[#08482D] transition-colors">
-                        {mode.label}
-                      </p>
-                      <p className="text-xs text-[#414447] font-semibold mt-1.5 leading-snug">
-                        {mode.detail}
-                      </p>
-                    </div>
-                  </SpotlightCard>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Hero Actions with Magnetic CTA buttons */}
+            {/* Navigation Actions (Explore Work & Contact Me) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.65 }}
-              className="flex flex-wrap items-center gap-4 pt-3"
+              className="flex flex-wrap items-center gap-4 pt-4"
             >
-              <Magnetic pullRatio={0.25}>
+              <Magnetic pullRatio={0.3}>
                 <motion.button
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={onExploreClick}
-                  className="btn-forest cursor-pointer shadow-md text-base"
+                  className="btn-forest cursor-pointer shadow-xl text-base px-7 py-3.5"
                 >
+                  <Compass className="w-5 h-5" />
                   <span>EXPLORE WORK</span>
-                  <ArrowDown className="w-5 h-5" />
+                  <ArrowDown className="w-4 h-4 ml-1" />
                 </motion.button>
               </Magnetic>
 
-              <Magnetic pullRatio={0.25}>
-                <motion.button
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={onOpenTerminal}
-                  className="btn-mint cursor-pointer shadow-sm text-base"
+              <Magnetic pullRatio={0.3}>
+                <a
+                  href="#contact"
+                  className="btn-mint cursor-pointer shadow-md text-base px-7 py-3.5 inline-flex items-center gap-2"
                 >
-                  <Terminal className="w-5 h-5 text-[#08482D]" />
-                  <span>INTERACTIVE CLI</span>
+                  <Mail className="w-5 h-5 text-[#34D399]" />
+                  <span>CONTACT ME</span>
+                </a>
+              </Magnetic>
+
+              <Magnetic pullRatio={0.3}>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onOpenTerminal}
+                  className="p-3.5 rounded-full bg-white/5 dark:bg-white/5 light:bg-[#EBF2DF] border border-white/10 dark:border-white/10 light:border-[#BED4A0] text-[#34D399] hover:bg-white/10 transition-all cursor-pointer shadow-md"
+                  title="Interactive Terminal"
+                >
+                  <Terminal className="w-5 h-5" />
                 </motion.button>
               </Magnetic>
             </motion.div>
           </div>
 
-          {/* Right Column: Floating 3D Geometric Centerpiece */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="lg:col-span-5 relative flex flex-col items-center justify-center"
-          >
-            <div className="relative w-full aspect-square max-w-[520px] rounded-3xl p-3.5 bg-white border-2 border-[#08482D]/15 shadow-xl shadow-[#08482D]/8 transition-transform duration-500 hover:shadow-2xl">
-              
-              {/* Handwritten Note Pin with Float Animation */}
-              <motion.div
-                animate={{
-                  y: [0, -6, 0],
-                  rotate: [-2, 2, -2],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="absolute -top-4 -left-3 z-20 px-4 py-1.5 bg-[#DAE7C7] text-[#08482D] rounded-full font-handwriting text-lg font-bold shadow-md border border-[#BED4A0]"
+          {/* Right Column: Active Theory Telemetry Floating Dossier */}
+          <div className="lg:col-span-4 hidden lg:block">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.9, delay: 0.35 }}
+              className="space-y-4"
+            >
+              <SpotlightCard
+                spotlightColor={isDark ? 'rgba(52, 211, 153, 0.15)' : 'rgba(8, 72, 45, 0.08)'}
+                className="p-6 rounded-3xl bg-white/5 dark:bg-white/5 light:bg-white border border-white/10 dark:border-white/10 light:border-[#08482D]/15 backdrop-blur-xl"
               >
-                move cursor to orbit 3d
-              </motion.div>
+                <div className="flex items-center justify-between mb-3 text-xs font-mono text-[#8A9684]">
+                  <span>SCULPTURE TELEMETRY</span>
+                  <span className="text-[#34D399] font-bold">WEBGL ACTIVE</span>
+                </div>
+                <div className="space-y-3 font-mono text-xs">
+                  <div className="flex justify-between items-center pb-2 border-b border-white/5">
+                    <span className="text-[#8A9684]">CORE SHADER</span>
+                    <span className="text-white dark:text-white light:text-[#0d120e] font-bold">MESH DISTORT 4.2</span>
+                  </div>
+                  <div className="flex justify-between items-center pb-2 border-b border-white/5">
+                    <span className="text-[#8A9684]">PARTICLE DENSITY</span>
+                    <span className="text-[#34D399] font-bold">3,800 NODES</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#8A9684]">CAMERA PARALLAX</span>
+                    <span className="text-white dark:text-white light:text-[#0d120e] font-bold">CURSOR LERP 0.05</span>
+                  </div>
+                </div>
+              </SpotlightCard>
 
-              {/* Top Studio Indicator */}
-              <div className="absolute top-4 right-6 flex items-center gap-2 text-xs font-mono font-bold text-[#414447] z-20 pointer-events-none">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#08482D] animate-ping" />
-                <span>THREE.JS CORE</span>
-              </div>
-
-              {/* Three.js Centerpiece Canvas */}
-              <div className="w-full h-full rounded-2xl overflow-hidden bg-[#F5F8EF] relative">
-                <CenterpieceCanvas scrollOffset={scrollOffset} />
-              </div>
-
-              {/* Bottom Telemetry Overlay */}
-              <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center text-xs font-mono font-bold text-[#414447] z-20 pointer-events-none">
-                <span>SCULPTURE // 180 NODES</span>
-                <span className="text-[#08482D]">DRAG &amp; ROTATE</span>
-              </div>
-            </div>
-          </motion.div>
+              <SpotlightCard
+                spotlightColor={isDark ? 'rgba(52, 211, 153, 0.15)' : 'rgba(8, 72, 45, 0.08)'}
+                className="p-6 rounded-3xl bg-white/5 dark:bg-white/5 light:bg-white border border-white/10 dark:border-white/10 light:border-[#08482D]/15 backdrop-blur-xl"
+              >
+                <span className="text-xs font-mono text-[#8A9684] block mb-1">COMPETITIVE STANDING</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-black font-display text-white dark:text-white light:text-[#0d120e]">1784</span>
+                  <span className="text-xs font-mono text-[#34D399] font-bold">TOP 9.13%</span>
+                </div>
+                <span className="text-xs text-[#8A9684] mt-1 block">930+ verified algorithmic solutions</span>
+              </SpotlightCard>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Telemetry bottom stats bar with bold clear metrics & Spotlight Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 border-t border-[#08482D]/15">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            whileHover={{ y: -4, scale: 1.02 }}
-          >
-            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
-              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">LEETCODE RATING</span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1784</span>
-                <span className="text-xs font-mono font-extrabold text-[#08482D]">PEAK 1879</span>
-              </div>
-              <span className="text-xs text-[#414447] font-semibold mt-1 block">Top 9.13% Worldwide</span>
-            </SpotlightCard>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            whileHover={{ y: -4, scale: 1.02 }}
-          >
-            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
-              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">TOTAL CP SOLVES</span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-3xl sm:text-4xl font-black text-[#08482D] font-display">930+</span>
-                <span className="text-xs font-mono font-bold text-[#414447]">SOLUTIONS</span>
-              </div>
-              <span className="text-xs text-[#414447] font-semibold mt-1 block">LC: 705 / CF: 62 / CC: 163</span>
-            </SpotlightCard>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            whileHover={{ y: -4, scale: 1.02 }}
-          >
-            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
-              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">CODEFORCES RATING</span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1018</span>
-                <span className="text-xs font-mono font-extrabold text-[#08482D]">NEWBIE</span>
-              </div>
-              <span className="text-xs text-[#414447] font-semibold mt-1 block">4 Rated Contests</span>
-            </SpotlightCard>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            whileHover={{ y: -4, scale: 1.02 }}
-          >
-            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
-              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">ACADEMIC BASE</span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-2xl sm:text-3xl font-black text-[#0d120e] font-display truncate">PICT PUNE</span>
-              </div>
-              <span className="text-xs text-[#414447] font-semibold mt-1 block">B.Tech AI &amp; DS (2028)</span>
-            </SpotlightCard>
-          </motion.div>
+        {/* Bottom Minimal Studio Bar */}
+        <div className="pt-8 border-t border-white/10 dark:border-white/10 light:border-[#08482D]/15 flex flex-wrap items-center justify-between text-xs font-mono text-[#8A9684] gap-4">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+            <span>INTERACTIVE 3D ORBIT ACTIVE</span>
+          </div>
+          <div>
+            <span>SCROLL TO DIVE // 01 ABOUT FOUNDATION</span>
+          </div>
         </div>
       </div>
     </section>
