@@ -1,6 +1,8 @@
 import { SECTIONS, SITE } from '../config/site'
 import { Terminal, ArrowUpRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { motion } from 'motion/react'
+import { Magnetic } from './Magnetic'
 
 interface NavigationProps {
   activeSection: string
@@ -57,9 +59,13 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
             }}
             className="group flex items-center gap-3"
           >
-            <div className="w-10 h-10 rounded-full bg-[#08482D] text-[#F5F8EF] flex items-center justify-center font-black text-base tracking-tight shadow-md group-hover:bg-[#053320] transition-colors">
+            <motion.div
+              whileHover={{ rotate: 10, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-10 h-10 rounded-full bg-[#08482D] text-[#F5F8EF] flex items-center justify-center font-black text-base tracking-tight shadow-md group-hover:bg-[#053320] transition-colors"
+            >
               K.
-            </div>
+            </motion.div>
             <div className="flex flex-col">
               <span className="font-extrabold tracking-tight text-[#0d120e] group-hover:text-[#08482D] transition-colors font-display text-base">
                 KARTIK BHANGALE
@@ -79,8 +85,8 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
           </div>
         </div>
 
-        {/* Studio Pill Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-[#EBF2DF] border border-[#BED4A0] backdrop-blur-sm shadow-sm">
+        {/* Studio Pill Navigation Links with Spring Layout Slider */}
+        <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full bg-[#EBF2DF]/80 border border-[#BED4A0] backdrop-blur-sm shadow-sm relative">
           {SECTIONS.map((sec) => {
             const isActive = activeSection === sec.id
             return (
@@ -91,12 +97,17 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
                   e.preventDefault()
                   onSelectSection(sec.id)
                 }}
-                className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-200 ${
-                  isActive
-                    ? 'bg-[#08482D] text-[#F5F8EF] shadow-sm'
-                    : 'text-[#0d120e] hover:text-[#08482D] hover:bg-[#DAE7C7]'
+                className={`relative px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-colors duration-200 z-10 ${
+                  isActive ? 'text-[#F5F8EF]' : 'text-[#0d120e] hover:text-[#08482D]'
                 }`}
               >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeSectionIndicator"
+                    className="absolute inset-0 bg-[#08482D] rounded-full -z-10 shadow-sm"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
                 {sec.label}
               </a>
             )
@@ -105,27 +116,31 @@ export function Navigation({ activeSection, onSelectSection, onOpenTerminal }: N
 
         {/* Action Controls */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={onOpenTerminal}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#EBF2DF] hover:bg-[#DAE7C7] border border-[#BED4A0] text-[#08482D] text-xs font-mono font-bold transition-all cursor-pointer shadow-sm group"
-            title="Open Interactive Terminal"
-          >
-            <Terminal className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-            <span className="hidden sm:inline">CLI</span>
-            <span className="text-xs px-1.5 py-0.5 rounded bg-[#DAE7C7] text-[#08482D] font-mono hidden md:inline">
-              ~
-            </span>
-          </button>
+          <Magnetic pullRatio={0.25}>
+            <button
+              onClick={onOpenTerminal}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#EBF2DF] hover:bg-[#DAE7C7] border border-[#BED4A0] text-[#08482D] text-xs font-mono font-bold transition-all cursor-pointer shadow-sm group"
+              title="Open Interactive Terminal"
+            >
+              <Terminal className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+              <span className="hidden sm:inline">CLI</span>
+              <span className="text-xs px-1.5 py-0.5 rounded bg-[#DAE7C7] text-[#08482D] font-mono hidden md:inline">
+                ~
+              </span>
+            </button>
+          </Magnetic>
 
-          <a
-            href={SITE.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-forest text-xs py-2.5 px-5 shadow-sm"
-          >
-            <span>GITHUB</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
+          <Magnetic pullRatio={0.25}>
+            <a
+              href={SITE.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-forest text-xs py-2.5 px-5 shadow-sm"
+            >
+              <span>GITHUB</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </Magnetic>
         </div>
       </div>
     </header>

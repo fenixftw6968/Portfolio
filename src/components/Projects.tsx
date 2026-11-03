@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { PROJECTS } from '../data/projects'
-import { ExternalLink, CheckCircle2, AlertTriangle, Shield } from 'lucide-react'
+import { ExternalLink, CheckCircle2, AlertTriangle, Shield, Layers } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
+import { SpotlightCard } from './SpotlightCard'
+import { Tilt3DCard } from './Tilt3DCard'
+import { Magnetic } from './Magnetic'
 
 function GithubIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -29,7 +32,7 @@ export function Projects() {
         >
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <span className="badge-mint font-mono text-xs font-bold">SECTION 02 // CASE FILES</span>
+              <span className="badge-mint font-mono text-xs font-bold">SECTION 04 // CASE FILES</span>
               <span className="font-handwriting text-2xl text-[#08482D] font-bold rotate-[-1deg]">
                 verified GitHub repositories
               </span>
@@ -43,44 +46,49 @@ export function Projects() {
           </p>
         </motion.div>
 
-        {/* Project Selector Rail in Reelmark Style */}
+        {/* Project Selector Rail with 3D Tilt Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
           {PROJECTS.map((p, i) => {
             const isSelected = p.id === selectedId
             return (
-              <motion.button
+              <motion.div
                 key={p.id}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedId(p.id)}
-                className={`p-5 rounded-2xl text-left border-2 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                  isSelected
-                    ? 'bg-[#08482D] text-[#F5F8EF] border-[#08482D] shadow-lg transform -translate-y-1'
-                    : 'reelmark-card text-[#414447] hover:text-[#0d120e] hover:border-[#08482D]/30'
-                }`}
               >
-                <div className="flex justify-between items-center mb-2.5">
-                  <span className={`text-xs font-mono font-bold ${isSelected ? 'text-[#DAE7C7]' : 'text-[#414447]'}`}>
-                    CASE {p.index}
-                  </span>
-                  {isSelected && <span className="w-2 h-2 rounded-full bg-[#DAE7C7] animate-ping" />}
-                </div>
-                <div className={`font-black text-sm font-display tracking-wide truncate ${isSelected ? 'text-white' : 'text-[#0d120e]'}`}>
-                  {p.name}
-                </div>
-                <div className={`text-xs font-mono font-semibold truncate mt-1.5 ${isSelected ? 'text-[#DAE7C7]/90' : 'text-[#414447]'}`}>
-                  {p.category}
-                </div>
-              </motion.button>
+                <Tilt3DCard intensity={10}>
+                  <button
+                    onClick={() => setSelectedId(p.id)}
+                    className={`w-full p-5 rounded-2xl text-left border-2 transition-all duration-300 cursor-pointer flex flex-col justify-between h-full min-h-[140px] ${
+                      isSelected
+                        ? 'bg-[#08482D] text-[#F5F8EF] border-[#08482D] shadow-xl transform -translate-y-1'
+                        : 'reelmark-card text-[#414447] hover:text-[#0d120e] hover:border-[#08482D]/30 bg-white'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center mb-2.5 w-full">
+                      <span className={`text-xs font-mono font-bold ${isSelected ? 'text-[#DAE7C7]' : 'text-[#414447]'}`}>
+                        CASE {p.index}
+                      </span>
+                      {isSelected && <span className="w-2 h-2 rounded-full bg-[#DAE7C7] animate-ping" />}
+                    </div>
+                    <div>
+                      <div className={`font-black text-sm font-display tracking-wide truncate ${isSelected ? 'text-white' : 'text-[#0d120e]'}`}>
+                        {p.name}
+                      </div>
+                      <div className={`text-xs font-mono font-semibold truncate mt-1.5 ${isSelected ? 'text-[#DAE7C7]/90' : 'text-[#414447]'}`}>
+                        {p.category}
+                      </div>
+                    </div>
+                  </button>
+                </Tilt3DCard>
+              </motion.div>
             )
           })}
         </div>
 
-        {/* Selected Project Full Dossier Card */}
+        {/* Selected Project Full Dossier Card with Spotlight Effect */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeProject.id}
@@ -88,182 +96,163 @@ export function Projects() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -18 }}
             transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="p-8 sm:p-12 rounded-3xl bg-white border-2 border-[#08482D]/15 shadow-xl shadow-[#08482D]/6"
           >
-            {/* Top Header */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-8 border-b border-[#08482D]/15 gap-5">
-              <div>
-                <div className="flex items-center gap-2.5 text-xs font-mono text-[#414447] mb-2.5 font-bold">
-                  <span className="text-[#08482D]">CASE FILE #{activeProject.index}</span>
-                  <span>•</span>
-                  <span className="badge-mint py-1 px-3 text-xs font-black">
-                    {activeProject.status}
-                  </span>
-                  <span>•</span>
-                  <span>{activeProject.year}</span>
-                </div>
-                <h3 className="text-3xl sm:text-5xl font-black text-[#0d120e] font-display tracking-tight">
-                  {activeProject.name}
-                  <span className="ml-3 text-xl sm:text-2xl font-normal text-[#414447] font-sans">
-                    // {activeProject.alias}
-                  </span>
-                </h3>
-                <p className="text-base sm:text-lg text-[#414447] mt-3 max-w-3xl leading-relaxed font-sans font-medium">
-                  {activeProject.tagline}
-                </p>
-              </div>
-
-              {/* Links and repo buttons */}
-              <div className="flex flex-wrap items-center gap-3.5">
-                {activeProject.repo && (
-                  <motion.a
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.96 }}
-                    href={activeProject.repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-forest text-sm py-3 px-6 shadow-md"
-                  >
-                    <GithubIcon className="w-5 h-5 text-[#DAE7C7]" />
-                    <span>VIEW REPO</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </motion.a>
-                )}
-
-                {activeProject.live && (
-                  <motion.a
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.96 }}
-                    href={activeProject.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-mint text-sm py-3 px-6 shadow-sm"
-                  >
-                    <span>LIVE DEMO</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </motion.a>
-                )}
-              </div>
-            </div>
-
-            {/* Technology Badges */}
-            <div className="py-6 border-b border-[#08482D]/15 flex flex-wrap gap-2.5 text-xs font-mono">
-              <span className="text-[#414447] py-1.5 mr-2 text-xs uppercase tracking-wider font-extrabold">STACK:</span>
-              {activeProject.stack.map((item) => (
-                <span
-                  key={item}
-                  className="px-3.5 py-1.5 rounded-full bg-[#EBF2DF] border border-[#BED4A0] text-[#08482D] font-bold text-xs"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-
-            {/* Dossier Body Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-8">
-              {/* Left 7 cols: Problem, Architecture, Decisions */}
-              <div className="lg:col-span-7 space-y-7">
-                
-                {/* Problem statement */}
+            <SpotlightCard
+              spotlightColor="rgba(8, 72, 45, 0.07)"
+              className="p-8 sm:p-12 rounded-3xl bg-white border-2 border-[#08482D]/15 shadow-xl shadow-[#08482D]/6"
+            >
+              {/* Top Header */}
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-8 border-b border-[#08482D]/15 gap-5">
                 <div>
-                  <h4 className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider mb-2.5">
-                    // THE ENGINEERING CHALLENGE
-                  </h4>
-                  <p className="text-base text-[#0d120e] leading-relaxed bg-[#F5F8EF] p-6 rounded-2xl border-2 border-[#08482D]/15 border-l-4 border-l-[#08482D] font-sans font-medium">
-                    {activeProject.problem}
+                  <div className="flex items-center gap-2.5 text-xs font-mono text-[#414447] mb-2.5 font-bold">
+                    <span className="text-[#08482D]">CASE FILE #{activeProject.index}</span>
+                    <span>•</span>
+                    <span className="badge-mint py-1 px-3 text-xs font-black">
+                      {activeProject.status}
+                    </span>
+                    <span>•</span>
+                    <span>{activeProject.category}</span>
+                  </div>
+                  <h3 className="text-3xl sm:text-5xl font-black text-[#0d120e] font-display tracking-tight">
+                    {activeProject.name}
+                  </h3>
+                  <p className="text-base sm:text-lg text-[#08482D] font-mono font-bold mt-2">
+                    {activeProject.tagline}
                   </p>
                 </div>
 
-                {/* Architecture Blueprint */}
-                <div>
-                  <h4 className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider mb-3">
-                    // SYSTEM TOPOLOGY &amp; ARCHITECTURE
-                  </h4>
-                  <div className="space-y-3 font-mono text-xs">
-                    {activeProject.architecture.map((layer, idx) => (
-                      <div
-                        key={idx}
-                        className="p-4 rounded-2xl bg-[#F5F8EF] border border-[#08482D]/15 flex flex-col sm:flex-row sm:items-start gap-3.5"
+                {/* Actions with Magnetic button effects */}
+                <div className="flex flex-wrap items-center gap-3">
+                  {activeProject.repo && (
+                    <Magnetic pullRatio={0.25}>
+                      <a
+                        href={activeProject.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-forest text-sm py-3 px-5 inline-flex items-center gap-2"
                       >
-                        <span className="text-[#08482D] font-black w-28 shrink-0 text-sm">
-                          [{layer.label}]
-                        </span>
-                        <span className="text-[#414447] font-semibold text-xs leading-relaxed">{layer.detail}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Verified Key Architectural Decisions */}
-                <div>
-                  <h4 className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider mb-3">
-                    // VERIFIED ARCHITECTURAL DECISIONS
-                  </h4>
-                  <ul className="space-y-3 text-sm text-[#414447] font-sans font-medium">
-                    {activeProject.decisions.map((dec, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-[#08482D] font-mono text-base font-bold leading-none mt-0.5">›</span>
-                        <span>{dec}</span>
-                      </li>
-                    ))}
-                  </ul>
+                        <GithubIcon className="w-4 h-4" />
+                        <span>SOURCE CODE</span>
+                      </a>
+                    </Magnetic>
+                  )}
+                  {activeProject.live && (
+                    <Magnetic pullRatio={0.25}>
+                      <a
+                        href={activeProject.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-mint text-sm py-3 px-5 inline-flex items-center gap-2"
+                      >
+                        <ExternalLink className="w-4 h-4 text-[#08482D]" />
+                        <span>LIVE DEPLOYMENT</span>
+                      </a>
+                    </Magnetic>
+                  )}
                 </div>
               </div>
 
-              {/* Right 5 cols: Visual Screenshot + Verified Checklist */}
-              <div className="lg:col-span-5 space-y-7">
-                
-                {/* Screenshot or Visual Card */}
-                {activeProject.screenshot ? (
-                  <div className="relative rounded-3xl border-2 border-[#08482D]/15 bg-[#F5F8EF] p-3 overflow-hidden shadow-md group">
-                    <div className="absolute top-5 left-5 z-10 px-3.5 py-1.5 rounded-full bg-[#08482D] text-[#F5F8EF] font-mono text-xs font-bold shadow-md">
-                      LIVE REPOSITORY SCREENSHOT
-                    </div>
-                    <img
-                      src={activeProject.screenshot}
-                      alt={activeProject.name}
-                      className="w-full h-auto rounded-2xl object-cover border border-[#08482D]/10 opacity-95 group-hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                ) : (
-                  <div className="p-10 rounded-3xl border-2 border-dashed border-[#08482D]/25 bg-[#F5F8EF] flex flex-col items-center justify-center text-center">
-                    <Shield className="w-10 h-10 text-[#08482D]/60 mb-3" />
-                    <span className="font-mono text-sm text-[#08482D] uppercase font-black">
-                      SEALED ARCHITECTURE / SOURCE PRIVATE
-                    </span>
-                    <p className="text-xs text-[#414447] mt-1.5 max-w-xs font-sans font-semibold">
-                      Protected internal research repository or private codebase.
+              {/* Problem & Architectural Blueprint */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 py-10 border-b border-[#08482D]/15">
+                <div className="lg:col-span-7 space-y-6">
+                  <div>
+                    <h4 className="text-xs font-mono font-bold text-[#08482D] uppercase tracking-wider mb-2">
+                      PROBLEM STATEMENT
+                    </h4>
+                    <p className="text-base sm:text-lg text-[#0d120e] leading-relaxed font-sans font-medium">
+                      {activeProject.problem}
                     </p>
                   </div>
-                )}
 
-                {/* Verified Capabilities Checklist */}
-                <div className="p-7 rounded-3xl reelmark-card-mint shadow-xs border-2 border-[#BED4A0]">
-                  <div className="flex items-center gap-3 mb-4">
-                    <CheckCircle2 className="w-5 h-5 text-[#08482D]" />
-                    <span className="font-mono text-xs font-black text-[#08482D] uppercase tracking-wider">
-                      VERIFIED ARTIFACT DELIVERABLES
-                    </span>
-                  </div>
-                  <div className="space-y-3 font-sans">
-                    {activeProject.verified.map((v, idx) => (
-                      <div key={idx} className="flex items-start gap-3 text-xs text-[#0d120e] font-semibold">
-                        <span className="text-[#08482D] font-mono text-sm leading-none">•</span>
-                        <span>{v}</span>
-                      </div>
-                    ))}
+                  <div className="p-6 rounded-2xl bg-[#F5F8EF] border border-[#08482D]/15">
+                    <h4 className="text-xs font-mono font-bold text-[#08482D] uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-[#08482D]" />
+                      ARCHITECTURAL BLUEPRINT
+                    </h4>
+                    <div className="space-y-3 font-sans text-sm sm:text-base">
+                      {activeProject.architecture.map((layer, idx) => (
+                        <div key={idx} className="flex flex-col sm:flex-row sm:items-start gap-2">
+                          <span className="font-mono text-xs font-bold text-[#08482D] bg-[#DAE7C7] px-2.5 py-0.5 rounded-full shrink-0 w-fit">
+                            {layer.label}
+                          </span>
+                          <span className="text-[#414447] text-sm leading-relaxed">{layer.detail}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                {/* Caveat or Engineering Note */}
-                {activeProject.caveat && (
-                  <div className="p-5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-xs text-amber-950 flex items-start gap-3 font-sans font-semibold">
-                    <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
-                    <span>{activeProject.caveat}</span>
+                {/* Technical Stack Tags & Highlights */}
+                <div className="lg:col-span-5 space-y-6">
+                  <div>
+                    <h4 className="text-xs font-mono font-bold text-[#08482D] uppercase tracking-wider mb-3">
+                      TECHNOLOGY IMPLEMENTATION
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {activeProject.stack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3.5 py-1.5 rounded-full bg-[#EBF2DF] text-[#08482D] border border-[#BED4A0] text-xs font-mono font-bold shadow-xs"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {activeProject.verified && (
+                    <div className="space-y-2.5 pt-4">
+                      <h4 className="text-xs font-mono font-bold text-[#414447] uppercase tracking-wider mb-2">
+                        KEY VERIFIED HIGHLIGHTS
+                      </h4>
+                      {activeProject.verified.slice(0, 6).map((h, i) => (
+                        <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#0d120e]">
+                          <CheckCircle2 className="w-4 h-4 text-[#08482D] shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Architectural Decisions & Challenges */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8">
+                {activeProject.decisions && activeProject.decisions.length > 0 && (
+                  <div className="p-6 rounded-2xl bg-white border border-[#08482D]/15">
+                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#08482D] mb-3 uppercase">
+                      <Shield className="w-4 h-4 text-[#08482D]" />
+                      ARCHITECTURAL DECISIONS
+                    </div>
+                    <ul className="space-y-2 text-xs sm:text-sm text-[#414447] leading-relaxed font-sans">
+                      {activeProject.decisions.slice(0, 3).map((d, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-[#08482D] font-mono font-bold">•</span>
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {activeProject.challenges && activeProject.challenges.length > 0 && (
+                  <div className="p-6 rounded-2xl bg-white border border-[#08482D]/15">
+                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-600 mb-3 uppercase">
+                      <AlertTriangle className="w-4 h-4 text-amber-600" />
+                      FAILURE MODES &amp; MITIGATION
+                    </div>
+                    <ul className="space-y-2 text-xs sm:text-sm text-[#414447] leading-relaxed font-sans">
+                      {activeProject.challenges.slice(0, 3).map((c, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-amber-600 font-mono font-bold">•</span>
+                          <span>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>
-            </div>
+            </SpotlightCard>
           </motion.div>
         </AnimatePresence>
       </div>

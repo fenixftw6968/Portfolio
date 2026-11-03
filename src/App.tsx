@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Navigation } from './components/Navigation'
 import { Hero } from './components/Hero'
 import { About } from './components/About'
+import { ExperienceTimeline } from './components/ExperienceTimeline'
 import { Projects } from './components/Projects'
 import { CompetitiveProgramming } from './components/CompetitiveProgramming'
 import { GitHubActivity } from './components/GitHubActivity'
@@ -25,7 +26,7 @@ export function App() {
       setScrollProgress(currentProgress)
 
       // Section spy
-      const sections = ['home', 'about', 'projects', 'cp', 'github', 'stack', 'contact']
+      const sections = ['home', 'about', 'experience', 'projects', 'cp', 'github', 'stack', 'contact']
       const scrollPos = window.scrollY + 200
 
       for (const id of sections) {
@@ -95,6 +96,8 @@ export function App() {
         />
 
         <About />
+
+        <ExperienceTimeline />
 
         <Projects />
 

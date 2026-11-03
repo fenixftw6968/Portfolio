@@ -2,6 +2,9 @@ import { CenterpieceCanvas } from './CenterpieceCanvas'
 import { HERO_STATEMENT, HERO_MODES, SITE } from '../config/site'
 import { ArrowDown, Terminal } from 'lucide-react'
 import { motion } from 'motion/react'
+import { ParticlesBackground } from './ParticlesBackground'
+import { Magnetic } from './Magnetic'
+import { SpotlightCard } from './SpotlightCard'
 
 interface HeroProps {
   scrollOffset: number
@@ -10,12 +13,41 @@ interface HeroProps {
 }
 
 export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps) {
+  // Stagger variants for name revelation
+  const nameVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.1,
+      },
+    },
+  }
+
+  const charVariants = {
+    hidden: { opacity: 0, y: 35, rotateX: -60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: {
+        type: 'spring' as const,
+        damping: 14,
+        stiffness: 120,
+      },
+    },
+  }
+
   return (
     <section
       id="home"
       className="relative min-h-screen pt-32 pb-24 flex flex-col justify-center overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
+      {/* Animated Subtle Particle Background */}
+      <ParticlesBackground />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 relative">
         
         {/* Soft Mint Introductory Badge & Animated Handwritten Annotation */}
         <motion.div
@@ -64,30 +96,61 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
         {/* Hero Grid: Editorial Typography + Floating 3D Centerpiece */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center py-6 lg:py-10">
           
-          {/* Left Column: Bold Asymmetric Typography */}
+          {/* Left Column: Bold Asymmetric Typography with Staggered Character Reveal */}
           <div className="lg:col-span-7 flex flex-col justify-center space-y-7">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-            >
-              <span className="text-sm font-mono font-extrabold tracking-widest text-[#08482D] uppercase block mb-3">
+            <div>
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.05 }}
+                className="text-sm font-mono font-extrabold tracking-widest text-[#08482D] uppercase block mb-3"
+              >
                 ENGINEER &amp; ALGORITHMIC SPECIALIST
-              </span>
-              <h1 className="text-6xl sm:text-7xl md:text-8xl xl:text-9xl font-black tracking-tight text-[#0d120e] font-display uppercase leading-[0.9] drop-shadow-sm">
-                KARTIK
-                <br />
-                <span className="text-[#08482D]">
-                  BHANGALE.
-                </span>
+              </motion.span>
+              
+              <h1 className="text-6xl sm:text-7xl md:text-8xl xl:text-9xl font-black tracking-tight text-[#0d120e] font-display uppercase leading-[0.9] drop-shadow-sm select-none">
+                <motion.div
+                  className="flex flex-wrap overflow-hidden"
+                  variants={nameVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {'KARTIK'.split('').map((char, index) => (
+                    <motion.span
+                      key={index}
+                      variants={charVariants}
+                      className="inline-block hover:text-[#08482D] transition-colors duration-200"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </motion.div>
+                
+                <motion.div
+                  className="flex flex-wrap text-[#08482D] overflow-hidden"
+                  variants={nameVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delayChildren: 0.35 }}
+                >
+                  {'BHANGALE.'.split('').map((char, index) => (
+                    <motion.span
+                      key={index}
+                      variants={charVariants}
+                      className="inline-block hover:opacity-80 transition-opacity"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </motion.div>
               </h1>
-            </motion.div>
+            </div>
 
             {/* Reelmark-style Editorial Mantra Block */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
               whileHover={{ y: -3 }}
               className="p-7 sm:p-8 rounded-3xl reelmark-card-mint relative group border-2 border-[#BED4A0]"
             >
@@ -114,58 +177,66 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
               </p>
             </motion.div>
 
-            {/* Core Capability Cards in Studio Style with larger typography */}
+            {/* Core Capability Cards with Interactive Spotlight Hover */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
               {HERO_MODES.map((mode, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.35 + i * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
                   whileHover={{ y: -6, scale: 1.02 }}
-                  className="p-5 rounded-2xl reelmark-card flex flex-col justify-between group cursor-default"
                 >
-                  <span className="text-xs font-mono font-bold text-[#414447] mb-2.5 block group-hover:text-[#08482D] transition-colors">
-                    0{i + 1} // FOCUS
-                  </span>
-                  <div>
-                    <p className="text-sm font-black text-[#0d120e] font-display uppercase tracking-wider group-hover:text-[#08482D] transition-colors">
-                      {mode.label}
-                    </p>
-                    <p className="text-xs text-[#414447] font-semibold mt-1.5 leading-snug">
-                      {mode.detail}
-                    </p>
-                  </div>
+                  <SpotlightCard
+                    spotlightColor="rgba(8, 72, 45, 0.12)"
+                    className="p-5 rounded-2xl reelmark-card flex flex-col justify-between group cursor-default h-full"
+                  >
+                    <span className="text-xs font-mono font-bold text-[#414447] mb-2.5 block group-hover:text-[#08482D] transition-colors">
+                      0{i + 1} // FOCUS
+                    </span>
+                    <div>
+                      <p className="text-sm font-black text-[#0d120e] font-display uppercase tracking-wider group-hover:text-[#08482D] transition-colors">
+                        {mode.label}
+                      </p>
+                      <p className="text-xs text-[#414447] font-semibold mt-1.5 leading-snug">
+                        {mode.detail}
+                      </p>
+                    </div>
+                  </SpotlightCard>
                 </motion.div>
               ))}
             </div>
 
-            {/* Hero Actions */}
+            {/* Hero Actions with Magnetic CTA buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.65 }}
               className="flex flex-wrap items-center gap-4 pt-3"
             >
-              <motion.button
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={onExploreClick}
-                className="btn-forest cursor-pointer shadow-md text-base"
-              >
-                <span>EXPLORE WORK</span>
-                <ArrowDown className="w-5 h-5" />
-              </motion.button>
+              <Magnetic pullRatio={0.25}>
+                <motion.button
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={onExploreClick}
+                  className="btn-forest cursor-pointer shadow-md text-base"
+                >
+                  <span>EXPLORE WORK</span>
+                  <ArrowDown className="w-5 h-5" />
+                </motion.button>
+              </Magnetic>
 
-              <motion.button
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={onOpenTerminal}
-                className="btn-mint cursor-pointer shadow-sm text-base"
-              >
-                <Terminal className="w-5 h-5 text-[#08482D]" />
-                <span>INTERACTIVE CLI</span>
-              </motion.button>
+              <Magnetic pullRatio={0.25}>
+                <motion.button
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={onOpenTerminal}
+                  className="btn-mint cursor-pointer shadow-sm text-base"
+                >
+                  <Terminal className="w-5 h-5 text-[#08482D]" />
+                  <span>INTERACTIVE CLI</span>
+                </motion.button>
+              </Magnetic>
             </motion.div>
           </div>
 
@@ -214,7 +285,7 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
           </motion.div>
         </div>
 
-        {/* Telemetry bottom stats bar with bold clear metrics */}
+        {/* Telemetry bottom stats bar with bold clear metrics & Spotlight Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 border-t border-[#08482D]/15">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -222,14 +293,15 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
             whileHover={{ y: -4, scale: 1.02 }}
-            className="p-6 rounded-2xl reelmark-card"
           >
-            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">LEETCODE RATING</span>
-            <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1784</span>
-              <span className="text-xs font-mono font-extrabold text-[#08482D]">PEAK 1879</span>
-            </div>
-            <span className="text-xs text-[#414447] font-semibold mt-1 block">Top 9.13% Worldwide</span>
+            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
+              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">LEETCODE RATING</span>
+              <div className="flex items-baseline gap-2 mt-1">
+                <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1784</span>
+                <span className="text-xs font-mono font-extrabold text-[#08482D]">PEAK 1879</span>
+              </div>
+              <span className="text-xs text-[#414447] font-semibold mt-1 block">Top 9.13% Worldwide</span>
+            </SpotlightCard>
           </motion.div>
 
           <motion.div
@@ -238,14 +310,15 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
             whileHover={{ y: -4, scale: 1.02 }}
-            className="p-6 rounded-2xl reelmark-card"
           >
-            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">TOTAL CP SOLVES</span>
-            <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-3xl sm:text-4xl font-black text-[#08482D] font-display">930+</span>
-              <span className="text-xs font-mono font-bold text-[#414447]">SOLUTIONS</span>
-            </div>
-            <span className="text-xs text-[#414447] font-semibold mt-1 block">LC: 705 / CF: 62 / CC: 163</span>
+            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
+              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">TOTAL CP SOLVES</span>
+              <div className="flex items-baseline gap-2 mt-1">
+                <span className="text-3xl sm:text-4xl font-black text-[#08482D] font-display">930+</span>
+                <span className="text-xs font-mono font-bold text-[#414447]">SOLUTIONS</span>
+              </div>
+              <span className="text-xs text-[#414447] font-semibold mt-1 block">LC: 705 / CF: 62 / CC: 163</span>
+            </SpotlightCard>
           </motion.div>
 
           <motion.div
@@ -254,14 +327,15 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
             whileHover={{ y: -4, scale: 1.02 }}
-            className="p-6 rounded-2xl reelmark-card"
           >
-            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">CODEFORCES RATING</span>
-            <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1018</span>
-              <span className="text-xs font-mono font-extrabold text-[#08482D]">NEWBIE</span>
-            </div>
-            <span className="text-xs text-[#414447] font-semibold mt-1 block">4 Rated Contests</span>
+            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
+              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">CODEFORCES RATING</span>
+              <div className="flex items-baseline gap-2 mt-1">
+                <span className="text-3xl sm:text-4xl font-black text-[#0d120e] font-display">1018</span>
+                <span className="text-xs font-mono font-extrabold text-[#08482D]">NEWBIE</span>
+              </div>
+              <span className="text-xs text-[#414447] font-semibold mt-1 block">4 Rated Contests</span>
+            </SpotlightCard>
           </motion.div>
 
           <motion.div
@@ -270,13 +344,14 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
             whileHover={{ y: -4, scale: 1.02 }}
-            className="p-6 rounded-2xl reelmark-card"
           >
-            <span className="text-[#414447] text-xs font-mono font-bold block mb-1">ACADEMIC BASE</span>
-            <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl sm:text-3xl font-black text-[#0d120e] font-display truncate">PICT PUNE</span>
-            </div>
-            <span className="text-xs text-[#414447] font-semibold mt-1 block">B.Tech AI &amp; DS (2026)</span>
+            <SpotlightCard className="p-6 rounded-2xl reelmark-card h-full">
+              <span className="text-[#414447] text-xs font-mono font-bold block mb-1">ACADEMIC BASE</span>
+              <div className="flex items-baseline gap-2 mt-1">
+                <span className="text-2xl sm:text-3xl font-black text-[#0d120e] font-display truncate">PICT PUNE</span>
+              </div>
+              <span className="text-xs text-[#414447] font-semibold mt-1 block">B.Tech AI &amp; DS (2026)</span>
+            </SpotlightCard>
           </motion.div>
         </div>
       </div>

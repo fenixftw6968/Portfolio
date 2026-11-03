@@ -38,11 +38,12 @@ export const SITE = {
 export const SECTIONS = [
   { id: 'home', index: '00', label: 'HOME', meta: 'ROOT' },
   { id: 'about', index: '01', label: 'ABOUT', meta: 'PHILOSOPHY' },
-  { id: 'projects', index: '02', label: 'PROJECTS', meta: 'CASE FILES' },
-  { id: 'cp', index: '03', label: 'CP STATS', meta: 'TELEMETRY' },
-  { id: 'github', index: '04', label: 'GITHUB', meta: 'FOOTPRINT' },
-  { id: 'stack', index: '05', label: 'TECH STACK', meta: 'ARSENAL' },
-  { id: 'contact', index: '06', label: 'CONTACT', meta: 'TRANSMIT' },
+  { id: 'experience', index: '02', label: 'EXPERIENCE', meta: 'TIMELINE' },
+  { id: 'projects', index: '03', label: 'PROJECTS', meta: 'CASE FILES' },
+  { id: 'cp', index: '04', label: 'CP STATS', meta: 'TELEMETRY' },
+  { id: 'github', index: '05', label: 'GITHUB', meta: 'FOOTPRINT' },
+  { id: 'stack', index: '06', label: 'TECH STACK', meta: 'ARSENAL' },
+  { id: 'contact', index: '07', label: 'CONTACT', meta: 'TRANSMIT' },
 ] as const
 
 export type SectionId = (typeof SECTIONS)[number]['id']

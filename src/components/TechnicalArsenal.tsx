@@ -1,6 +1,25 @@
 import { useState } from 'react'
 import { STACK_GROUPS } from '../config/site'
 import { motion, AnimatePresence } from 'motion/react'
+import { SpotlightCard } from './SpotlightCard'
+import { Marquee } from './Marquee'
+import { Sparkles } from 'lucide-react'
+
+// All marquee tech items with their descriptions
+const MARQUEE_TECH = [
+  { name: 'Java', role: 'Enterprise Systems' },
+  { name: 'C++', role: 'Competitive Algorithms' },
+  { name: 'Python', role: 'Deep Learning & ML' },
+  { name: 'TypeScript', role: 'Full-Stack Apps' },
+  { name: 'Spring Boot', role: 'High-Throughput REST' },
+  { name: 'PostgreSQL', role: 'Relational DB' },
+  { name: 'Docker', role: 'Container Orchestration' },
+  { name: 'TensorFlow', role: 'Computer Vision' },
+  { name: 'WebSockets', role: 'Real-Time STOMP' },
+  { name: 'FastAPI', role: 'Low-Latency Serving' },
+  { name: 'Redis', role: 'Cache & Rate Limiting' },
+  { name: 'Grad-CAM', role: 'Model Explainability' },
+]
 
 export function TechnicalArsenal() {
   const [activeGroupId, setActiveGroupId] = useState<string>(STACK_GROUPS[0].id)
@@ -16,11 +35,11 @@ export function TechnicalArsenal() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#08482D]/10 pb-10 mb-14"
+          className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#08482D]/10 pb-10 mb-10"
         >
           <div>
             <div className="flex items-center gap-2.5 mb-3">
-              <span className="badge-mint font-mono text-xs sm:text-sm">SECTION 05 // SYSTEM CAPABILITIES</span>
+              <span className="badge-mint font-mono text-xs sm:text-sm">SECTION 06 // SYSTEM CAPABILITIES</span>
               <span className="font-handwriting text-2xl text-[#08482D] font-bold rotate-[-1deg]">
                 languages, backends &amp; AI
               </span>
@@ -33,6 +52,31 @@ export function TechnicalArsenal() {
             Categorized by verified production deployment vs deliberate architectural exploration.
           </p>
         </motion.div>
+
+        {/* Infinite Horizontal Scrolling Technology Marquee */}
+        <div className="mb-14 -mx-4 sm:-mx-6 lg:-mx-8">
+          <Marquee speed={35} pauseOnHover={true} className="py-4">
+            {MARQUEE_TECH.map((item, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ scale: 1.05, y: -2 }}
+                className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-[#08482D]/15 shadow-xs hover:border-[#08482D]/40 transition-all cursor-default group"
+              >
+                <div className="w-8 h-8 rounded-xl bg-[#EBF2DF] text-[#08482D] flex items-center justify-center font-bold text-xs group-hover:bg-[#08482D] group-hover:text-white transition-colors">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-sm font-black text-[#0d120e] font-display block leading-none">
+                    {item.name}
+                  </span>
+                  <span className="text-[11px] font-mono text-[#414447] font-semibold mt-0.5 block">
+                    {item.role}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </Marquee>
+        </div>
 
         {/* Group Selector Pills */}
         <div className="flex flex-wrap gap-3 mb-10 font-mono text-sm">
@@ -91,101 +135,46 @@ export function TechnicalArsenal() {
               </div>
             </div>
 
-            {/* Cards Grid */}
+            {/* Cards Grid with Spotlight hover */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {activeGroup.tags.map((skill, idx) => {
+              {activeGroup.tags.map((skill) => {
                 const isShipped = skill.status === 'shipped'
                 return (
-                  <motion.div
+                  <SpotlightCard
                     key={skill.name}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: idx * 0.04 }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    className="p-6 rounded-2xl bg-[#F5F8EF]/80 border border-[#08482D]/10 hover:border-[#08482D]/35 transition-all flex flex-col justify-between group hover:shadow-md"
+                    spotlightColor={isShipped ? 'rgba(8, 72, 45, 0.08)' : 'rgba(245, 158, 11, 0.08)'}
+                    className="p-6 rounded-2xl bg-[#F5F8EF] border border-[#08482D]/10 flex flex-col justify-between hover:border-[#08482D]/30 transition-all"
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-3.5">
-                        <h4 className="font-display text-lg font-bold text-[#0d120e] group-hover:text-[#08482D] transition-colors">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="text-lg font-black text-[#0d120e] font-display">
                           {skill.name}
                         </h4>
-                        <span
-                          className={`text-xs font-mono px-3 py-1 rounded-full uppercase tracking-wider font-bold ${
-                            isShipped
-                              ? 'bg-[#DAE7C7] text-[#08482D] border border-[#C8DBAE]'
-                              : 'bg-amber-100 text-amber-800 border border-amber-300'
-                          }`}
-                        >
-                          {skill.status}
-                        </span>
+                        <span className={`w-2.5 h-2.5 rounded-full ${isShipped ? 'bg-[#08482D]' : 'bg-amber-500'}`} />
                       </div>
-
-                      <p className="text-sm text-[#414447] leading-relaxed font-sans">
+                      <p className="text-xs sm:text-sm text-[#414447] leading-relaxed font-sans mb-4">
                         {skill.note}
                       </p>
                     </div>
 
-                    {skill.projects && skill.projects.length > 0 && (
-                      <div className="mt-5 pt-4 border-t border-[#08482D]/10 flex flex-wrap gap-2">
+                    {skill.projects.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[#08482D]/10">
                         {skill.projects.map((proj) => (
                           <span
                             key={proj}
-                            className="font-mono text-xs px-2.5 py-1 rounded-full bg-white text-[#08482D] border border-[#08482D]/15 font-semibold"
+                            className="px-2.5 py-0.5 rounded-md bg-white border border-[#BED4A0] text-[11px] font-mono text-[#08482D] font-bold"
                           >
-                            #{proj}
+                            {proj}
                           </span>
                         ))}
                       </div>
                     )}
-                  </motion.div>
+                  </SpotlightCard>
                 )
               })}
             </div>
           </motion.div>
         </AnimatePresence>
-
-        {/* Global Key Architecture Competencies in Studio Cards */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            whileHover={{ y: -5, scale: 1.02 }}
-            className="p-8 rounded-3xl reelmark-card"
-          >
-            <span className="text-[#08482D] block font-bold mb-2.5 text-base sm:text-lg font-display tracking-wide">CONCURRENCY &amp; LOCKS</span>
-            <p className="text-[#414447] text-sm sm:text-base font-sans leading-relaxed">
-              Pessimistic locking, `FOR UPDATE SKIP LOCKED` query patterns, and race hazard mitigations in live match lobbies.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            whileHover={{ y: -5, scale: 1.02 }}
-            className="p-8 rounded-3xl reelmark-card"
-          >
-            <span className="text-[#08482D] block font-bold mb-2.5 text-base sm:text-lg font-display tracking-wide">AUTH &amp; INTEGRITY</span>
-            <p className="text-[#414447] text-sm sm:text-base font-sans leading-relaxed">
-              OIDC ID token cryptographic verification, JWT stateless identity, duplicate-link preventions, and tamper-resistant matches.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            whileHover={{ y: -5, scale: 1.02 }}
-            className="p-8 rounded-3xl reelmark-card"
-          >
-            <span className="text-[#08482D] block font-bold mb-2.5 text-base sm:text-lg font-display tracking-wide">MODEL EXPLAINABILITY</span>
-            <p className="text-[#414447] text-sm sm:text-base font-sans leading-relaxed">
-              DenseNet121 transfer learning coupled with Grad-CAM visual gradients for auditable clinical decision support.
-            </p>
-          </motion.div>
-        </div>
       </div>
     </section>
   )

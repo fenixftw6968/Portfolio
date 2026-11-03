@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { SITE, EMAIL_SUBJECT } from '../config/site'
+import { SITE } from '../config/site'
 import { Mail, Copy, Check, Send, ArrowUpRight, MapPin, Clock, Globe } from 'lucide-react'
 import { motion } from 'motion/react'
+import { SpotlightCard } from './SpotlightCard'
+import { Magnetic } from './Magnetic'
 
 function LinkedinIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
@@ -42,7 +44,7 @@ export function Contact() {
         >
           <div>
             <div className="flex items-center gap-2.5 mb-3">
-              <span className="badge-mint font-mono text-xs sm:text-sm">SECTION 06 // TRANSMISSION</span>
+              <span className="badge-mint font-mono text-xs sm:text-sm">SECTION 07 // TRANSMISSION</span>
               <span className="font-handwriting text-2xl text-[#08482D] font-bold rotate-[-1deg]">
                 let&apos;s build together
               </span>
@@ -66,154 +68,156 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-white border border-[#08482D]/15 shadow-xl shadow-[#08482D]/5 flex flex-col justify-between"
+            className="lg:col-span-7"
           >
-            <div>
-              <span className="text-sm font-mono font-bold text-[#08482D] uppercase tracking-wider block mb-4">
-                PRIMARY TRANSMISSION PORT
-              </span>
-              <h3 className="text-3xl sm:text-5xl font-black text-[#101410] font-display tracking-tight mb-5 leading-tight">
-                LET&apos;S ENGINEER SOMETHING MEANINGFUL.
-              </h3>
-              <p className="text-base sm:text-lg text-[#414447] leading-relaxed mb-10 font-sans">
-                Whether you need high-throughput Spring services, competitive programming mentorship, distributed system architecture, or applied computer vision models, my transmission channels are open.
-              </p>
+            <SpotlightCard
+              spotlightColor="rgba(8, 72, 45, 0.08)"
+              className="p-8 sm:p-12 rounded-3xl bg-white border border-[#08482D]/15 shadow-xl shadow-[#08482D]/5 flex flex-col justify-between h-full"
+            >
+              <div>
+                <span className="text-sm font-mono font-bold text-[#08482D] uppercase tracking-wider block mb-4">
+                  PRIMARY TRANSMISSION PORT
+                </span>
+                <h3 className="text-3xl sm:text-5xl font-black text-[#101410] font-display tracking-tight mb-5 leading-tight">
+                  LET&apos;S ENGINEER SOMETHING MEANINGFUL.
+                </h3>
+                <p className="text-base sm:text-lg text-[#414447] leading-relaxed mb-10 font-sans">
+                  Whether you need high-throughput Spring services, competitive programming mentorship, distributed system architecture, or applied computer vision models, my transmission channels are open.
+                </p>
 
-              {/* Direct email box */}
-              <div className="p-6 rounded-2xl bg-[#F5F8EF] border border-[#08482D]/15 flex flex-col sm:flex-row sm:items-center justify-between gap-5 font-mono">
-                <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-full bg-[#DAE7C7] text-[#08482D] flex items-center justify-center shadow-sm shrink-0">
-                    <Mail className="w-5 h-5" />
+                {/* Direct email box */}
+                <div className="p-6 rounded-2xl bg-[#F5F8EF] border border-[#08482D]/15 flex flex-col sm:flex-row sm:items-center justify-between gap-5 font-mono mb-8">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-12 h-12 rounded-full bg-[#DAE7C7] text-[#08482D] flex items-center justify-center shadow-sm shrink-0">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <span className="text-[#0d120e] font-bold text-base sm:text-lg select-all">{SITE.email}</span>
                   </div>
-                  <span className="text-[#0d120e] font-bold text-base sm:text-lg select-all">{SITE.email}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleCopyEmail}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-[#DAE7C7] text-[#08482D] border border-[#C8DBAE] transition-colors cursor-pointer text-sm font-semibold"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="w-4 h-4 text-[#08482D]" />
-                        <span className="text-[#08482D] font-bold">COPIED</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4 text-[#414447]" />
-                        <span>COPY</span>
-                      </>
-                    )}
-                  </motion.button>
+                  <div className="flex items-center gap-3">
+                    <Magnetic pullRatio={0.25}>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleCopyEmail}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-[#DAE7C7] text-[#08482D] border border-[#C8DBAE] transition-colors cursor-pointer text-sm font-semibold"
+                      >
+                        {copied ? (
+                          <>
+                            <Check className="w-4 h-4 text-[#08482D]" />
+                            <span className="text-[#08482D] font-bold">COPIED</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-4 h-4 text-[#08482D]" />
+                            <span>COPY</span>
+                          </>
+                        )}
+                      </motion.button>
+                    </Magnetic>
 
-                  <motion.a
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    href={`mailto:${SITE.email}?subject=${EMAIL_SUBJECT}`}
-                    className="btn-forest text-sm py-2.5 px-5 shadow-sm inline-flex items-center gap-2"
-                  >
-                    <Send className="w-4 h-4" />
-                    <span>LAUNCH MAIL</span>
-                  </motion.a>
+                    <Magnetic pullRatio={0.25}>
+                      <a
+                        href={SITE.links.email}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#08482D] hover:bg-[#053320] text-white transition-colors cursor-pointer text-sm font-semibold shadow-sm"
+                      >
+                        <Send className="w-4 h-4" />
+                        <span>DISPATCH</span>
+                      </a>
+                    </Magnetic>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-12 pt-8 border-t border-[#08482D]/10 flex flex-col sm:flex-row sm:items-center justify-between font-mono text-xs sm:text-sm text-[#414447] gap-2">
-              <span>RESPONSE CADENCE: &lt; 24 HOURS</span>
-              <span className="text-[#08482D] font-bold">DIRECT SOCKET READY</span>
-            </div>
+              {/* Status footer bar */}
+              <div className="pt-6 border-t border-[#08482D]/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#414447]">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#08482D]" />
+                  <span>TIMEZONE: {SITE.timezone} (UTC+5:30)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-[#08482D]" />
+                  <span>LOCATION: {SITE.location}</span>
+                </div>
+              </div>
+            </SpotlightCard>
           </motion.div>
 
-          {/* Social Profiles & Coordinates Grid */}
+          {/* Right Column: Interactive Profiles & Telemetry Badges */}
           <div className="lg:col-span-5 space-y-6">
-            
-            {/* LinkedIn */}
-            <motion.a
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ y: -4, scale: 1.02 }}
-              href={SITE.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-8 rounded-3xl reelmark-card flex items-center justify-between group block"
-            >
-              <div className="flex items-center gap-5">
-                <div className="w-14 h-14 rounded-2xl bg-[#EBF2DF] text-[#08482D] flex items-center justify-center group-hover:bg-[#08482D] group-hover:text-[#F5F8EF] transition-colors shadow-sm">
-                  <LinkedinIcon className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-display text-lg font-bold text-[#0d120e] uppercase tracking-wide">
-                    LINKEDIN NETWORK
-                  </h4>
-                  <p className="font-mono text-sm text-[#414447] mt-0.5">
-                    /in/kartik-bhangale-13011a329
-                  </p>
-                </div>
-              </div>
-              <ArrowUpRight className="w-5 h-5 text-[#414447] group-hover:text-[#08482D] transition-colors" />
-            </motion.a>
-
-            {/* GitHub */}
-            <motion.a
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ y: -4, scale: 1.02 }}
-              href={SITE.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-8 rounded-3xl reelmark-card flex items-center justify-between group block"
-            >
-              <div className="flex items-center gap-5">
-                <div className="w-14 h-14 rounded-2xl bg-[#EBF2DF] text-[#08482D] flex items-center justify-center group-hover:bg-[#08482D] group-hover:text-[#F5F8EF] transition-colors shadow-sm">
-                  <GithubIcon className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-display text-lg font-bold text-[#0d120e] uppercase tracking-wide">
-                    GITHUB REPOSITORIES
-                  </h4>
-                  <p className="font-mono text-sm text-[#414447] mt-0.5">
-                    @fenixftw6968 (16 Repositories)
-                  </p>
-                </div>
-              </div>
-              <ArrowUpRight className="w-5 h-5 text-[#414447] group-hover:text-[#08482D] transition-colors" />
-            </motion.a>
-
-            {/* Location & Timezone info card */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="p-8 rounded-3xl reelmark-card-mint font-mono text-sm space-y-3.5 text-[#414447]"
+              transition={{ duration: 0.7, delay: 0.1 }}
             >
-              <div className="flex justify-between items-center">
-                <span className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-[#08482D]" />
-                  LOCATION:
-                </span>
-                <span className="text-[#0d120e] font-bold">Pune, Maharashtra, India</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-[#08482D]" />
-                  TIMEZONE:
-                </span>
-                <span className="text-[#0d120e] font-bold">Asia/Kolkata (UTC +05:30)</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="flex items-center gap-2.5">
-                  <Globe className="w-4 h-4 text-[#08482D]" />
-                  STATUS:
-                </span>
-                <span className="text-[#08482D] font-bold uppercase">READY TO BUILD</span>
-              </div>
+              <SpotlightCard className="p-8 rounded-3xl bg-white border border-[#08482D]/15 shadow-sm">
+                <h4 className="text-xs font-mono font-bold text-[#08482D] uppercase tracking-wider mb-6">
+                  PUBLIC NETWORK PROFILES
+                </h4>
+
+                <div className="space-y-4">
+                  {[
+                    {
+                      label: 'GitHub',
+                      handle: `@${SITE.handles.github}`,
+                      url: SITE.links.github,
+                      icon: GithubIcon,
+                      desc: 'Repositories, production services, and open-source contributions',
+                    },
+                    {
+                      label: 'LinkedIn',
+                      handle: `@${SITE.handles.linkedin}`,
+                      url: SITE.links.linkedin,
+                      icon: LinkedinIcon,
+                      desc: 'Professional engineering background & verified experience',
+                    },
+                    {
+                      label: 'LeetCode',
+                      handle: `@${SITE.handles.leetcode}`,
+                      url: SITE.links.leetcode,
+                      icon: Globe,
+                      desc: '705 solved algorithms, contest telemetry, badge history',
+                    },
+                    {
+                      label: 'Codeforces',
+                      handle: `@${SITE.handles.codeforces}`,
+                      url: SITE.links.codeforces,
+                      icon: Globe,
+                      desc: 'Rated division contest participant and algorithmic problem solving',
+                    },
+                  ].map((profile) => (
+                    <motion.a
+                      key={profile.label}
+                      href={profile.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      whileHover={{ x: 6, backgroundColor: '#EBF2DF' }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      className="p-4 rounded-2xl bg-[#F5F8EF] border border-[#08482D]/10 flex items-center justify-between group transition-colors cursor-pointer"
+                    >
+                      <div className="flex items-center gap-3.5">
+                        <div className="p-2.5 rounded-xl bg-white text-[#08482D] group-hover:bg-[#08482D] group-hover:text-white transition-colors shrink-0 shadow-xs">
+                          <profile.icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h5 className="font-display font-black text-sm text-[#0d120e]">
+                              {profile.label}
+                            </h5>
+                            <span className="text-xs font-mono text-[#08482D] font-bold">
+                              {profile.handle}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[#414447] mt-0.5 line-clamp-1">
+                            {profile.desc}
+                          </p>
+                        </div>
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 text-[#08482D] opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+                    </motion.a>
+                  ))}
+                </div>
+              </SpotlightCard>
             </motion.div>
           </div>
         </div>
