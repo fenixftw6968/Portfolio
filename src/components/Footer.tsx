@@ -5,7 +5,7 @@ export function Footer() {
         KARTIK BHANGALE • {new Date().getFullYear()}
       </div>
       <div>
-        PORTFOLIO ARCHITECTURE
+        PUNE, INDIA
       </div>
     </footer>
   )

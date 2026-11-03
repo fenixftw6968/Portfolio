@@ -38,7 +38,7 @@ export function Hero({ onExploreClick }: HeroProps) {
           className="space-y-4 mb-10"
         >
           <div className="text-lg sm:text-xl font-medium tracking-wide text-[#A0A0A0]">
-            Creative Developer
+            Competitive Programmer
             <span className="mx-2 text-[#666666]">•</span>
             AI &amp; Backend Engineer
           </div>
