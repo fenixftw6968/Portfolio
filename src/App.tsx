@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Lenis from 'lenis'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { About } from './components/About'
@@ -16,6 +15,7 @@ import { CustomCursor } from './components/CustomCursor'
 import { ParticleBackground } from './components/ParticleBackground'
 import { LoadingScreen } from './components/LoadingScreen'
 import { ThemeProvider } from './context/ThemeContext'
+import { useCinematicScroll } from './hooks/useCinematicScroll'
 
 export function AppContent() {
   const [activeSection, setActiveSection] = useState('home')
@@ -23,22 +23,11 @@ export function AppContent() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Initialize Lenis smooth scroll engine
+  // Initialize synchronized Lenis + GSAP ScrollTrigger engine
+  useCinematicScroll()
+
+  // Track global scroll progression and active section
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 2,
-    })
-
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    requestAnimationFrame(raf)
-
     const handleScroll = () => {
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight
       const currentProgress = totalScroll > 0 ? window.scrollY / totalScroll : 0
@@ -62,10 +51,7 @@ export function AppContent() {
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      lenis.destroy()
-      window.removeEventListener('scroll', handleScroll)
-    }
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   // Keyboard shortcut ` or ~ to toggle terminal
@@ -93,7 +79,7 @@ export function AppContent() {
       {/* Active Theory-inspired Loading Screen with shader warmup simulation */}
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
 
-      {/* Cinematic Custom Cursor */}
+      {/* Cinematic Custom Cursor with Stardust Trail */}
       <CustomCursor />
 
       {/* Floating Micro-Particle Web Backdrop */}

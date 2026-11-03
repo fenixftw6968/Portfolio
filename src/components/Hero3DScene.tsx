@@ -239,3 +239,4 @@ export function Hero3DScene({ scrollOffset = 0 }: { scrollOffset?: number }) {
     </div>
   )
 }
+
