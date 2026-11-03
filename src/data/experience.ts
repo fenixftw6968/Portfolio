@@ -42,6 +42,21 @@ export const TIMELINE_EXPERIENCES: ExperienceItem[] = [
     tags: ['Competitive Programming', 'Data Structures & Algorithms', 'Codeforces', 'LeetCode', 'CodeChef'],
   },
   {
+    id: 'acm-member',
+    period: '2024 — Present',
+    role: 'ACM Student Chapter Member & Event Contributor',
+    organization: 'ACM Student Chapter, PICT',
+    location: 'Pune, Maharashtra',
+    type: 'leadership',
+    description: 'Active member of the ACM Student Chapter at PICT, contributing to the planning and organization of various technical events, workshops, and student activities. Collaborate with fellow members to coordinate event operations, engage participants, and promote technical learning and community involvement.',
+    bullets: [
+      'Contribute to planning and organizing technical events, workshops, and hackathons.',
+      'Coordinate event operations and manage participant workflows effectively.',
+      'Promote technical peer learning and community engagement across the institute.',
+    ],
+    tags: ['Event Organization', 'Technical Events', 'Team Collaboration', 'Community Engagement'],
+  },
+  {
     id: 'algoarena-release',
     period: '2025',
     role: 'Lead Systems Architect & Full-Stack Developer',
