@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { SITE, EMAIL_SUBJECT } from '../config/site'
 import { Mail, Copy, Check, Send, ArrowUpRight, MapPin, Clock, Globe } from 'lucide-react'
+import { motion } from 'motion/react'
 
 function LinkedinIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
@@ -32,7 +33,13 @@ export function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#08482D]/10 pb-10 mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#08482D]/10 pb-10 mb-14"
+        >
           <div>
             <div className="flex items-center gap-2.5 mb-3">
               <span className="badge-mint font-mono text-xs sm:text-sm">SECTION 06 // TRANSMISSION</span>
@@ -48,13 +55,19 @@ export function Contact() {
             <span className="w-2.5 h-2.5 rounded-full bg-[#08482D] animate-ping" />
             <span>SOCKET OPEN FOR HARD PROBLEMS</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Contact Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Main Direct Dispatch Box */}
-          <div className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-white border border-[#08482D]/15 shadow-xl shadow-[#08482D]/5 flex flex-col justify-between">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-white border border-[#08482D]/15 shadow-xl shadow-[#08482D]/5 flex flex-col justify-between"
+          >
             <div>
               <span className="text-sm font-mono font-bold text-[#08482D] uppercase tracking-wider block mb-4">
                 PRIMARY TRANSMISSION PORT
@@ -75,7 +88,9 @@ export function Contact() {
                   <span className="text-[#0d120e] font-bold text-base sm:text-lg select-all">{SITE.email}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={handleCopyEmail}
                     className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-[#DAE7C7] text-[#08482D] border border-[#C8DBAE] transition-colors cursor-pointer text-sm font-semibold"
                   >
@@ -90,15 +105,17 @@ export function Contact() {
                         <span>COPY</span>
                       </>
                     )}
-                  </button>
+                  </motion.button>
 
-                  <a
+                  <motion.a
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     href={`mailto:${SITE.email}?subject=${EMAIL_SUBJECT}`}
                     className="btn-forest text-sm py-2.5 px-5 shadow-sm inline-flex items-center gap-2"
                   >
                     <Send className="w-4 h-4" />
                     <span>LAUNCH MAIL</span>
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </div>
@@ -107,13 +124,18 @@ export function Contact() {
               <span>RESPONSE CADENCE: &lt; 24 HOURS</span>
               <span className="text-[#08482D] font-bold">DIRECT SOCKET READY</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Social Profiles & Coordinates Grid */}
           <div className="lg:col-span-5 space-y-6">
             
             {/* LinkedIn */}
-            <a
+            <motion.a
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -4, scale: 1.02 }}
               href={SITE.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
@@ -133,10 +155,15 @@ export function Contact() {
                 </div>
               </div>
               <ArrowUpRight className="w-5 h-5 text-[#414447] group-hover:text-[#08482D] transition-colors" />
-            </a>
+            </motion.a>
 
             {/* GitHub */}
-            <a
+            <motion.a
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ y: -4, scale: 1.02 }}
               href={SITE.links.github}
               target="_blank"
               rel="noopener noreferrer"
@@ -156,10 +183,16 @@ export function Contact() {
                 </div>
               </div>
               <ArrowUpRight className="w-5 h-5 text-[#414447] group-hover:text-[#08482D] transition-colors" />
-            </a>
+            </motion.a>
 
             {/* Location & Timezone info card */}
-            <div className="p-8 rounded-3xl reelmark-card-mint font-mono text-sm space-y-3.5 text-[#414447]">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="p-8 rounded-3xl reelmark-card-mint font-mono text-sm space-y-3.5 text-[#414447]"
+            >
               <div className="flex justify-between items-center">
                 <span className="flex items-center gap-2.5">
                   <MapPin className="w-4 h-4 text-[#08482D]" />
@@ -181,7 +214,7 @@ export function Contact() {
                 </span>
                 <span className="text-[#08482D] font-bold uppercase">READY TO BUILD</span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
