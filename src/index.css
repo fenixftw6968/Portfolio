@@ -3,45 +3,28 @@
 @theme {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-hand: 'Caveat', cursive, sans-serif;
   --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-
-  /* Color Palette */
-  --color-forest: #08482D;
-  --color-forest-dark: #053320;
-  --color-forest-light: #0d5e3c;
-  --color-mint: #DAE7C7;
-  --color-mint-light: #EBF2DF;
-  --color-mint-border: #C8DBAE;
-  --color-dark-ink: #0d120e;
-  --color-muted-text: #8A9684;
 }
 
 :root {
   color-scheme: dark;
-  background-color: #080B09;
-  color: #E0E7DC;
+  background-color: #050505;
+  color: #FFFFFF;
   font-family: var(--font-sans);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-html.light {
-  color-scheme: light;
-  background-color: #F5F8EF;
-  color: #0d120e;
+body {
+  background-color: #050505;
+  color: #FFFFFF;
+  overflow-x: hidden;
 }
 
-html.dark {
-  color-scheme: dark;
-  background-color: #080B09;
-  color: #E0E7DC;
-}
-
-/* Lenis Recommended CSS for Silky Smooth Scrolling */
+/* Lenis Smooth Scroll Configuration */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -58,213 +41,76 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
+/* Minimal Monochrome Card Styles */
+.mono-card {
+  background-color: #0D0D0D;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
-/* Handwritten annotation styling */
-.font-handwriting {
-  font-family: var(--font-hand);
-  font-size: 1.35rem;
-  line-height: 1.2;
+.mono-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
-/* Studio Glass / Card Styles with clear contrast borders & generous padding */
-.reelmark-card {
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1.5px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.75rem;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease;
-  will-change: transform;
-}
-
-html.light .reelmark-card {
+/* Clean Monochrome Buttons */
+.btn-primary {
   background-color: #FFFFFF;
-  border: 1.5px solid rgba(8, 72, 45, 0.12);
-  box-shadow: 0 4px 20px -2px rgba(8, 72, 45, 0.05), 0 2px 6px -1px rgba(8, 72, 45, 0.03);
-}
-
-.reelmark-card:hover {
-  border-color: rgba(52, 211, 153, 0.4);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
-  transform: translateY(-5px);
-}
-
-html.light .reelmark-card:hover {
-  border-color: rgba(8, 72, 45, 0.3);
-  box-shadow: 0 20px 40px -10px rgba(8, 72, 45, 0.14), 0 8px 16px -4px rgba(8, 72, 45, 0.08);
-}
-
-.reelmark-card-mint {
-  background-color: rgba(52, 211, 153, 0.06);
-  border: 1.5px solid rgba(52, 211, 153, 0.2);
-  border-radius: 1.75rem;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-}
-
-html.light .reelmark-card-mint {
-  background-color: #EBF2DF;
-  border: 1.5px solid #BED4A0;
-}
-
-.reelmark-card-mint:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 36px -8px rgba(52, 211, 153, 0.18);
-}
-
-/* High-contrast Cinematic Buttons */
-.btn-forest {
-  background-color: #10B981;
-  color: #080B09;
-  font-weight: 700;
-  font-size: 0.95rem;
+  color: #050505;
+  font-weight: 600;
+  font-size: 0.9rem;
   border-radius: 9999px;
   padding: 0.85rem 1.75rem;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.25s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.25);
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-html.light .btn-forest {
-  background-color: #08482D;
-  color: #F5F8EF;
-  box-shadow: 0 6px 18px rgba(8, 72, 45, 0.2);
+.btn-primary:hover {
+  background-color: #E0E0E0;
+  transform: translateY(-2px);
 }
 
-.btn-forest:hover {
-  background-color: #34D399;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 28px -6px rgba(16, 185, 129, 0.4);
-}
-
-html.light .btn-forest:hover {
-  background-color: #053320;
-  box-shadow: 0 14px 30px -6px rgba(8, 72, 45, 0.38);
-}
-
-.btn-forest:active {
-  transform: translateY(0px) scale(0.98);
-}
-
-.btn-mint {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #34D399;
-  font-weight: 700;
-  font-size: 0.95rem;
+.btn-secondary {
+  background-color: transparent;
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.9rem;
   border-radius: 9999px;
   padding: 0.85rem 1.75rem;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.25s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  border: 1.5px solid rgba(52, 211, 153, 0.3);
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-html.light .btn-mint {
-  background-color: #DAE7C7;
-  color: #08482D;
-  border: 1.5px solid #BED4A0;
+.btn-secondary:hover {
+  border-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
 }
 
-.btn-mint:hover {
-  background-color: rgba(52, 211, 153, 0.15);
-  border-color: #34D399;
-  transform: translateY(-3px) scale(1.02);
-}
-
-html.light .btn-mint:hover {
-  background-color: #C8DBAE;
-}
-
-.btn-mint:active {
-  transform: translateY(0px) scale(0.98);
-}
-
-/* Badges */
-.badge-mint {
-  background-color: rgba(52, 211, 153, 0.12);
-  color: #34D399;
-  font-weight: 700;
-  border-radius: 9999px;
-  padding: 0.45rem 1.1rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  border: 1px solid rgba(52, 211, 153, 0.3);
-  transition: transform 0.3s ease;
-}
-
-html.light .badge-mint {
-  background-color: #DAE7C7;
-  color: #08482D;
-  border: 1px solid #BED4A0;
-}
-
-.badge-mint:hover {
-  transform: scale(1.04);
-}
-
-/* Marquee keyframes */
-@keyframes marquee-left {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
-}
-
-@keyframes marquee-right {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0%); }
-}
-
-.animate-marquee-left {
-  animation: marquee-left linear infinite;
-}
-
-.animate-marquee-right {
-  animation: marquee-right linear infinite;
-}
-
-/* Floating animation keyframes */
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(1deg); }
-}
-
-@keyframes float-reverse {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(8px) rotate(-1deg); }
-}
-
-.animate-float {
-  animation: float-gentle 6s ease-in-out infinite;
-}
-
-.animate-float-reverse {
-  animation: float-reverse 7s ease-in-out infinite;
-}
-
-/* Custom Selection */
+/* Custom Text Selection */
 ::selection {
-  background-color: #34D399;
-  color: #080B09;
+  background-color: #FFFFFF;
+  color: #050505;
 }
 
-/* Custom Scrollbar */
+/* Minimal Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080B09;
+  background: #050505;
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #10B981;
+  background: rgba(255, 255, 255, 0.35);
 }

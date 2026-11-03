@@ -31,3 +31,4 @@ export function SmoothImage({ src, alt, className = '', aspectRatio = 'aspect-vi
     </div>
   )
 }
+
