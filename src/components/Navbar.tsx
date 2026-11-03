@@ -1,7 +1,7 @@
 import { SECTIONS, SITE } from '../config/site'
-import { Terminal, ArrowUpRight, Sun, Moon } from 'lucide-react'
+import { Terminal, ArrowUpRight, Sun, Moon, Menu, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import { Magnetic } from './Magnetic'
 import { useTheme } from '../context/ThemeContext'
 
@@ -13,6 +13,7 @@ interface NavbarProps {
 
 export function Navbar({ activeSection, onSelectSection, onOpenTerminal }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [time, setTime] = useState('')
   const { theme, toggleTheme } = useTheme()
   const isDark = theme === 'dark'
@@ -43,12 +44,17 @@ export function Navbar({ activeSection, onSelectSection, onOpenTerminal }: Navba
     return () => clearInterval(timer)
   }, [])
 
+  const handleMobileNavClick = (id: string) => {
+    setMobileMenuOpen(false)
+    onSelectSection(id)
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-[#080B09]/85 dark:bg-[#080B09]/85 light:bg-[#F5F8EF]/95 backdrop-blur-xl border-b border-white/10 dark:border-white/10 light:border-[#08482D]/15 py-3 shadow-2xl'
-          : 'bg-transparent py-6'
+          : 'bg-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -64,9 +70,9 @@ export function Navbar({ activeSection, onSelectSection, onOpenTerminal }: Navba
             className="group flex items-center gap-3"
           >
             <motion.div
-              whileHover={{ rotate: 10, scale: 1.05 }}
+              whileHover={{ rotate: 12, scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 rounded-full bg-[#10B981] text-[#080B09] flex items-center justify-center font-black text-base tracking-tight shadow-lg shadow-[#10B981]/20 font-display"
+              className="w-10 h-10 rounded-full bg-[#10B981] text-[#080B09] flex items-center justify-center font-black text-base tracking-tight shadow-lg shadow-[#10B981]/25 font-display"
             >
               K.
             </motion.div>
@@ -89,7 +95,7 @@ export function Navbar({ activeSection, onSelectSection, onOpenTerminal }: Navba
           </div>
         </div>
 
-        {/* Cinematic Minimal Pill Navigation Links */}
+        {/* Desktop Navigation Links with Spring Layout Slider */}
         <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full bg-white/5 dark:bg-white/5 light:bg-[#EBF2DF]/80 border border-white/10 dark:border-white/10 light:border-[#BED4A0] backdrop-blur-md shadow-inner relative">
           {SECTIONS.map((sec) => {
             const isActive = activeSection === sec.id
@@ -120,31 +126,30 @@ export function Navbar({ activeSection, onSelectSection, onOpenTerminal }: Navba
           })}
         </nav>
 
-        {/* Controls: Theme Toggle, Terminal, GitHub */}
-        <div className="flex items-center gap-3">
+        {/* Controls: Theme Toggle, Terminal, GitHub & Mobile Menu Toggle */}
+        <div className="flex items-center gap-2.5">
           
-          {/* Active Theme Toggle */}
+          {/* Smooth Dark/Light Theme Toggle */}
           <Magnetic pullRatio={0.3}>
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-full bg-white/5 dark:bg-white/5 light:bg-[#EBF2DF] border border-white/10 dark:border-white/10 light:border-[#BED4A0] text-[#34D399] dark:text-[#34D399] light:text-[#08482D] hover:scale-105 transition-all cursor-pointer shadow-xs"
+              className="p-2.5 rounded-full bg-white/5 dark:bg-white/5 light:bg-[#EBF2DF] border border-white/10 dark:border-white/10 light:border-[#BED4A0] text-[#34D399] dark:text-[#34D399] light:text-[#08482D] hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-xs"
               title="Toggle Theme"
+              aria-label="Toggle Theme"
             >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {isDark ? <Sun className="w-4 h-4 transition-transform hover:rotate-45" /> : <Moon className="w-4 h-4 transition-transform hover:-rotate-12" />}
             </button>
           </Magnetic>
 
+          {/* Interactive Terminal Trigger */}
           <Magnetic pullRatio={0.3}>
             <button
               onClick={onOpenTerminal}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 dark:bg-white/5 light:bg-[#EBF2DF] hover:bg-white/10 dark:hover:bg-white/10 light:hover:bg-[#DAE7C7] border border-white/10 dark:border-white/10 light:border-[#BED4A0] text-[#34D399] dark:text-[#34D399] light:text-[#08482D] text-xs font-mono font-bold transition-all cursor-pointer shadow-xs group"
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-white/5 dark:bg-white/5 light:bg-[#EBF2DF] hover:bg-white/10 dark:hover:bg-white/10 light:hover:bg-[#DAE7C7] border border-white/10 dark:border-white/10 light:border-[#BED4A0] text-[#34D399] dark:text-[#34D399] light:text-[#08482D] text-xs font-mono font-bold transition-all cursor-pointer shadow-xs group"
               title="Open Interactive Terminal"
             >
               <Terminal className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               <span className="hidden sm:inline">CLI</span>
-              <span className="text-xs px-1.5 py-0.5 rounded bg-white/10 text-[#34D399] font-mono hidden md:inline">
-                ~
-              </span>
             </button>
           </Magnetic>
 
@@ -159,9 +164,48 @@ export function Navbar({ activeSection, onSelectSection, onOpenTerminal }: Navba
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </Magnetic>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="p-2.5 rounded-full bg-white/5 md:hidden border border-white/10 text-white hover:text-[#34D399] transition-colors"
+            aria-label="Open Navigation Menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </div>
+
+      {/* Animated Mobile Fullscreen Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden bg-[#080B09]/95 dark:bg-[#080B09]/95 light:bg-[#F5F8EF]/95 backdrop-blur-2xl border-b border-white/10 px-6 py-6 space-y-3"
+          >
+            {SECTIONS.map((sec, i) => (
+              <motion.button
+                key={sec.id}
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.04 }}
+                onClick={() => handleMobileNavClick(sec.id)}
+                className={`w-full text-left py-2.5 px-4 rounded-xl font-mono text-sm font-bold flex items-center justify-between ${
+                  activeSection === sec.id
+                    ? 'bg-[#10B981] text-[#080B09]'
+                    : 'text-[#8A9684] hover:text-white'
+                }`}
+              >
+                <span>{sec.label}</span>
+                <span className="text-xs opacity-60">0{i}</span>
+              </motion.button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
-

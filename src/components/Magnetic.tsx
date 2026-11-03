@@ -28,14 +28,14 @@ export function Magnetic({ children, pullRatio = 0.35, className = '' }: Magneti
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      data-magnetic="true"
       style={{
         transform: `translate3d(${position.x}px, ${position.y}px, 0px)`,
         transition: position.x === 0 && position.y === 0 ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' : 'transform 0.1s ease-out',
       }}
-      className={`inline-block will-change-transform ${className}`}
+      className={`inline-block will-change-transform magnetic-active ${className}`}
     >
       {children}
     </div>
   )
 }
-
