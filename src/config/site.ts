@@ -15,7 +15,7 @@ export const SITE = {
   institution: 'Pune Institute of Computer Technology',
   institutionShort: 'PICT',
   studyYear: 'Third year',
-  batch: 'AI & DS / 2026',
+  batch: 'AI & DS / 2028',
   availability: 'OPEN TO HARD PROBLEMS',
   status: 'SYSTEM ONLINE',
   links: {

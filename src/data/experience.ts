@@ -13,7 +13,7 @@ export interface ExperienceItem {
 export const TIMELINE_EXPERIENCES: ExperienceItem[] = [
   {
     id: 'pict-btech',
-    period: '2023 — 2026 (Present)',
+    period: '2024 — 2028 (Present)',
     role: 'B.Tech in Artificial Intelligence & Data Science',
     organization: 'Pune Institute of Computer Technology (PICT)',
     location: 'Pune, MH',

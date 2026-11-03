@@ -65,7 +65,7 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
               <span className="w-2.5 h-2.5 rounded-full bg-[#08482D] animate-ping" />
               <span>{SITE.availability}</span>
               <span className="text-[#08482D]/40">•</span>
-              <span>{SITE.institutionShort} 2026</span>
+              <span>{SITE.institutionShort} 2028</span>
             </motion.div>
             
             {/* Prominent handwritten annotation */}
@@ -350,7 +350,7 @@ export function Hero({ scrollOffset, onExploreClick, onOpenTerminal }: HeroProps
               <div className="flex items-baseline gap-2 mt-1">
                 <span className="text-2xl sm:text-3xl font-black text-[#0d120e] font-display truncate">PICT PUNE</span>
               </div>
-              <span className="text-xs text-[#414447] font-semibold mt-1 block">B.Tech AI &amp; DS (2026)</span>
+              <span className="text-xs text-[#414447] font-semibold mt-1 block">B.Tech AI &amp; DS (2028)</span>
             </SpotlightCard>
           </motion.div>
         </div>
